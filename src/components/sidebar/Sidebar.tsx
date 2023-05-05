@@ -3,9 +3,16 @@ import { useSidebarContext } from "./SidebarProvider";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarNav } from "./SidebarNav";
 import { useEffect } from "react";
+import { SideBarGroup } from "./SidebarGroup";
+import { getProjects } from "@services/api";
+import { useQuery } from "react-query";
+import { IProject } from "src/types/types";
 
 export function Sidebar() {
   const { isOpen, toggle, close } = useSidebarContext();
+  const { data: projects } = useQuery<IProject[]>("projects", getProjects, {
+    suspense: true,
+  });
 
   useEffect(() => {
     const width = window.screen.width;
@@ -23,7 +30,7 @@ export function Sidebar() {
         }
       />
       <aside
-        className={`fixed bg-neutral-50 z-10 top-0 lg:top-auto transition-transform ${
+        className={`fixed bg-neutral-50 z-10 top-0 mt-16 lg:top-auto transition-transform ${
           isOpen ? "" : "-translate-x-56"
         } 500ms bg-white h-full shadow-sm shadow-zinc-400 pt-4 px-4 flex-shrink-0 font-abhaya w-56`}
       >
@@ -32,6 +39,17 @@ export function Sidebar() {
           <SidebarItem to="/app" name="Strona główna" />
           <SidebarItem to="/app/projects" name="Projekty" />
         </SidebarNav>
+        <SideBarGroup title="Projekty">
+          <SidebarNav>
+            {projects &&
+              projects.map((project) => (
+                <SidebarItem
+                  to={`/app/projects/${project.id}`}
+                  name={project.name}
+                />
+              ))}
+          </SidebarNav>
+        </SideBarGroup>
       </aside>
     </>
   );

@@ -1,6 +1,6 @@
 export function SidebarNav({ children }: { children: React.ReactNode }) {
   return (
-    <nav className="mt-16">
+    <nav className="">
       <ul>{children}</ul>
     </nav>
   );
