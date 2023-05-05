@@ -5,12 +5,12 @@ import { SidebarNav } from "./SidebarNav";
 import { useEffect } from "react";
 
 export function Sidebar() {
-  const { isOpen, toggle, open } = useSidebarContext();
+  const { isOpen, toggle, close } = useSidebarContext();
 
   useEffect(() => {
     const width = window.screen.width;
-    if (width > 800) {
-      open();
+    if (width < 800) {
+      close();
     }
   }, []);
 

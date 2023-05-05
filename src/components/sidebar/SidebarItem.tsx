@@ -12,16 +12,12 @@ export function SidebarItem({
   const location = useLocation();
   const isActive = location.pathname === to;
   const variant = isActive
-    ? "bg-gray-100 text-primary hover:bg-gray-200"
-    : "text-neutral-700 hover:bg-gray-100 hover:text-primary";
+    ? "bg-neutral-200 hover:bg-neutral-200"
+    : "text-neutral-700 hover:bg-gray-100 ";
 
   return (
     <Link to={to}>
-      <li
-        className={`${variant} rounded-full font-semibold py-2 px-6 text-center my-2`}
-      >
-        {name}
-      </li>
+      <li className={`${variant} rounded py-1 w-full pl-4  my-2`}>{name}</li>
     </Link>
   );
 }
