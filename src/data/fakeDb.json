@@ -1,0 +1,107 @@
+{
+  "projects": {
+    "project1": {
+      "display": "list",
+      "id": "project1",
+      "name": "Project 1",
+      "sections": [
+        {
+          "name": "Section 1",
+          "id": "section1",
+          "order": 1,
+          "tasks": [
+            {
+              "name": "Task 1",
+              "order": 1,
+              "id": "task1",
+              "note": "Note for Task 1",
+              "priority": 1
+            },
+            {
+              "name": "Task 2",
+              "order": 2,
+              "id": "task2",
+              "note": "Note for Task 2",
+              "priority": 2
+            }
+          ]
+        },
+        {
+          "name": "Section 2",
+          "id": "section2",
+          "order": 2,
+          "tasks": [
+            {
+              "name": "Task 3",
+              "order": 1,
+              "id": "task3"
+            },
+            {
+              "name": "Task 4",
+              "order": 2,
+              "id": "task4"
+            }
+          ]
+        }
+      ]
+    },
+    "project2": {
+      "display": "board",
+      "id": "project2",
+      "name": "Project 2",
+      "sections": [
+        {
+          "name": "Backlog",
+          "id": "backlog",
+          "order": 1,
+          "tasks": [
+            {
+              "name": "Task 1",
+              "order": 1,
+              "id": "task1",
+              "priority": 1
+            },
+            {
+              "name": "Task 2",
+              "order": 2,
+              "id": "task2",
+              "priority": 2
+            }
+          ]
+        },
+        {
+          "name": "In Progress",
+          "id": "inprogress",
+          "order": 2,
+          "tasks": [
+            {
+              "name": "Task 3",
+              "order": 1,
+              "id": "task3",
+              "note": "Note for Task 3"
+            },
+            {
+              "name": "Task 4",
+              "order": 2,
+              "id": "task4",
+              "note": "Note for Task 4"
+            }
+          ]
+        },
+        {
+          "name": "Done",
+          "id": "done",
+          "order": 3,
+          "tasks": [
+            {
+              "name": "Task 5",
+              "order": 1,
+              "id": "task5",
+              "priority": 3
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
