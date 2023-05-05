@@ -11,16 +11,16 @@ export function Header() {
   const { toggle } = useSidebarContext();
 
   return (
-    <header className="flex sticky w-full justify-between items-center px-4 py-2 ">
-      <button className="lg:hidden">
+    <header className="flex bg-neutral-100 sticky w-full justify-between items-center px-4 py-2 ">
+      <button className="">
         <Bars3Icon className="h-6 w-6" onClick={toggle} />
       </button>
-      <h1 className="text-primary text-4xl mt-4 ml-4 font-abhaya font-bold"></h1>
-      <Menu as="div" className="relative md:self-start">
+      <h1 className="text-2xl font-abhaya font-bold hidden lg:block">Priori</h1>
+      <Menu as="div" className="relative">
         <div>
-          <Menu.Button className="">
+          <Menu.Button>
             <UserCircleIcon className="w-6 h-6 inline-block" />
-            <ChevronDownIcon className="w-6 h-6 inline-block text-primary" />
+            <ChevronDownIcon className="w-6 h-6 inline-block " />
           </Menu.Button>
         </div>
         <Transition
