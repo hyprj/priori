@@ -1,6 +1,6 @@
 {
-  "projects": {
-    "project1": {
+  "projects": [
+    {
       "display": "list",
       "id": "project1",
       "name": "Project 1",
@@ -45,7 +45,7 @@
         }
       ]
     },
-    "project2": {
+    {
       "display": "board",
       "id": "project2",
       "name": "Project 2",
@@ -103,5 +103,5 @@
         }
       ]
     }
-  }
+  ]
 }
