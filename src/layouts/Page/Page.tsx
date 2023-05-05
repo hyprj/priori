@@ -11,7 +11,7 @@ export function Page({
   return (
     <div
       className={`transition-[margin-left] flex flex-grow  500ms ${
-        isOpen ? "lg:ml-56" : "ml-0 lg:ml-56"
+        isOpen ? "lg:ml-56" : "ml-0"
       }`}
     >
       <div className={` w-full animate-enter lg:mx-8`}>

@@ -2,9 +2,17 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useSidebarContext } from "./SidebarProvider";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarNav } from "./SidebarNav";
+import { useEffect } from "react";
 
 export function Sidebar() {
-  const { isOpen, toggle } = useSidebarContext();
+  const { isOpen, toggle, open } = useSidebarContext();
+
+  useEffect(() => {
+    const width = window.screen.width;
+    if (width > 800) {
+      open();
+    }
+  }, []);
 
   return (
     <>
@@ -15,8 +23,8 @@ export function Sidebar() {
         }
       />
       <aside
-        className={`fixed z-10 top-0 lg:top-auto transition-transform ${
-          isOpen ? "" : "-translate-x-56 lg:-translate-x-0"
+        className={`fixed bg-neutral-50 z-10 top-0 lg:top-auto transition-transform ${
+          isOpen ? "" : "-translate-x-56"
         } 500ms bg-white h-full shadow-sm shadow-zinc-400 pt-4 px-4 flex-shrink-0 font-abhaya w-56`}
       >
         <XMarkIcon onClick={toggle} className="h-8 ml-auto lg:hidden" />
