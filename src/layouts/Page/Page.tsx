@@ -1,12 +1,6 @@
 import { useSidebarContext } from "@components/sidebar/SidebarProvider";
 
-export function Page({
-  children,
-  title,
-}: {
-  children: React.ReactNode;
-  title: string;
-}) {
+export function Page({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSidebarContext();
   return (
     <div
@@ -14,10 +8,7 @@ export function Page({
         isOpen ? "lg:ml-56" : "ml-0"
       }`}
     >
-      <div className={` w-full animate-enter lg:mx-8`}>
-        <h2 className="text-4xl col font-roboto">{title}</h2>
-        {children}
-      </div>
+      <div className={` w-full animate-enter lg:mx-8`}>{children}</div>
     </div>
   );
 }

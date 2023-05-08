@@ -1,5 +1,10 @@
+import { Button } from "@components/button/Button";
 import { CheckCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { IProject } from "src/types/types";
+import { createTask } from "@services/api";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { IProject, Priority, ITask } from "../../types/types";
 
 export function Project({ project }: { project: IProject }) {
   return (
@@ -20,26 +25,27 @@ export function Project({ project }: { project: IProject }) {
                 <div
                   key={task.id}
                   data-task-id={task.id}
-                  className="my-4  relative border-b-[1px] border-slate-200"
+                  className="my-4 border-b-[1px] border-slate-200"
                 >
-                  <div className="absolute -left-7">m</div>
-                  <div className="flex">
-                    <CheckCircleIcon
-                      className="h-6 mr-2 text-gray-400"
-                      strokeWidth={0.5}
-                    />
-                    <div>
-                      <p className="pt-[3px]">{task.name}</p>
-                      {task.note && (
-                        <p className="text-sm text-gray-700">{task.note}</p>
-                      )}
+                  <div className="relative">
+                    <div className="absolute -left-7">m</div>
+                    <div className="flex">
+                      <CheckCircleIcon
+                        className="h-6 mr-2 text-gray-400"
+                        strokeWidth={0.5}
+                      />
+                      <div>
+                        <p className="pt-[3px]">{task.name}</p>
+                        {task.note && (
+                          <p className="text-sm text-gray-700">{task.note}</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             <footer>
-              <PlusIcon className="h-6" strokeWidth={0.5} />
-              <AddTaskDialog />
+              <AddTask projectId={project.id} sectionId={section.id} />
             </footer>
           </section>
         ))}
@@ -47,17 +53,118 @@ export function Project({ project }: { project: IProject }) {
   );
 }
 
-export function AddTaskDialog() {
+export interface Inputs {
+  name: string;
+  note?: string;
+  priority: Priority;
+}
+
+export function AddTask({
+  projectId,
+  sectionId,
+}: {
+  projectId: string;
+  sectionId: string;
+}) {
+  const [isActive, setIsActive] = useState(false);
+  const path = `/projects/${projectId}/sections/${sectionId}/tasks`;
+  const { mutateAsync } = useMutation((task: ITask) => createTask(path, task));
+
+  const handleSubmit = async (data: Inputs) => {
+    const task: ITask = {
+      id: Math.random().toString(),
+      name: data.name,
+      note: data.note,
+      priority: data.priority || Priority.Low,
+      order: 0,
+    };
+    console.log(data);
+    await mutateAsync(task);
+    setIsActive(false);
+  };
+
+  const handleEscape = (e: KeyboardEvent) =>
+    e.key === "Escape" && setIsActive(false);
+
+  useEffect(() => {
+    if (isActive) {
+      document.addEventListener("keydown", handleEscape);
+    }
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isActive]);
+
   return (
-    <div className="border-[1px] rounded">
-      <div className="flex p-3 flex-col">
-        <input type="text" placeholder="Task name" />
-        <input type="text" placeholder="Note" />
+    <>
+      {!isActive && (
+        <PlusIcon
+          className="h-6"
+          strokeWidth={0.5}
+          onClick={() => setIsActive(true)}
+        />
+      )}
+      {isActive && (
+        <>
+          <div
+            className="fixed z-0 inset-0"
+            onClick={() => setIsActive(false)}
+          ></div>
+          <div className="relative z-10">
+            <AddTaskDialog
+              onSubmit={handleSubmit}
+              onClose={() => setIsActive(false)}
+            />
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+export function AddTaskDialog({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (data: Inputs) => void;
+}) {
+  const { register, handleSubmit, formState } = useForm<Inputs>();
+  const isDisabled = !formState.isValid;
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="border-[1px] rounded-lg">
+        <div className="flex p-3 flex-col">
+          <input
+            {...register("name", { required: true })}
+            className="outline-none mb-2 font-semibold text-sm"
+            type="text"
+            placeholder="Task name"
+          />
+          <textarea
+            {...register("note")}
+            className="text-xs outline-none mb-1 w-full text-gray-600 resize-y"
+            placeholder="Note"
+          />
+        </div>
+        <div className="p-2 border-t-[1px] flex justify-between">
+          <div className="">
+            <p className="text-sm font-semibold">priority</p>
+            <select {...register("priority")}>
+              <option defaultChecked value="low">
+                low
+              </option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+            </select>
+          </div>
+          <div>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button variant="action" type="submit" disabled={isDisabled}>
+              Add
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className=" p-3 border-t-[1px]">
-        <button>Cancel</button>
-        <button>Add</button>
-      </div>
-    </div>
+    </form>
   );
 }

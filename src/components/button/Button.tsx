@@ -5,11 +5,13 @@ export const variants = {
   danger: "bg-red-500 hover:bg-red-700 text-white",
   success: "bg-green-500 hover:bg-green-700 text-white",
   warning: "bg-yellow-500 hover:bg-yellow-600 text-white",
+  action:
+    "bg-red-500/90 hover:bg-red-600 text-white disabled:bg-red-300 disabled:cursor-not-allowed",
 };
 
 export const sizes = {
-  xs: "py-1 px-3 text-xs",
-  sm: "py-[5px] px-4",
+  xs: "py-1 px-3 text-xs mx-1",
+  sm: "py-[4px] px-4 text-sm mx-1",
   md: "py-2 px-5 text-md",
   lg: "py-2 px-7 text-lg",
 };
@@ -29,7 +31,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`rounded-full font-abhaya   ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`rounded-lg   ${variants[variant]} ${sizes[size]} ${className}`}
       {...rest}
     >
       {children}

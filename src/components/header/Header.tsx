@@ -5,16 +5,23 @@ import {
   ChevronDownIcon,
   Bars3Icon,
 } from "@heroicons/react/20/solid";
+import { HomeIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const { toggle } = useSidebarContext();
 
   return (
-    <header className="flex bg-neutral-100 sticky w-full justify-between items-center px-4 py-2 ">
-      <button className="">
-        <Bars3Icon className="h-6 w-6" onClick={toggle} />
-      </button>
+    <header className="flex bg-neutral-100 sticky  w-full justify-between items-center px-4 py-2 ">
+      <div className="flex items-center gap-4">
+        <button onClick={toggle}>
+          <Bars3Icon className="h-6 w-6" />
+        </button>
+        <Link to="/app">
+          <HomeIcon className="h-6 w-6" />
+        </Link>
+      </div>
       <h1 className="text-2xl font-abhaya font-bold hidden lg:block">Priori</h1>
       <Menu as="div" className="relative">
         <div>

@@ -1,14 +1,6 @@
 import { To, useLocation, Link } from "react-router-dom";
 
-export function SidebarItem({
-  to,
-  name,
-  icon,
-}: {
-  to: To;
-  name: string;
-  icon?: React.ReactNode;
-}) {
+export function SidebarItem({ to, name }: { to: To; name: string }) {
   const location = useLocation();
   const isActive = location.pathname === to;
   const variant = isActive

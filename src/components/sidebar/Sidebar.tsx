@@ -26,11 +26,11 @@ export function Sidebar() {
       <div
         onClick={toggle}
         className={
-          isOpen ? "fixed inset-0 bg-black bg-opacity-25 lg:hidden" : ""
+          isOpen ? "fixed inset-0 z-40 bg-black bg-opacity-25 lg:hidden" : ""
         }
       />
       <aside
-        className={`fixed bg-neutral-50 z-10 top-0 mt-16 lg:top-auto transition-transform ${
+        className={`fixed bg-neutral-50 z-50 top-0 pt-16 lg:top-auto transition-transform ${
           isOpen ? "" : "-translate-x-56"
         } 500ms bg-white h-full shadow-sm shadow-zinc-400 pt-4 px-4 flex-shrink-0 font-abhaya w-56`}
       >
@@ -44,6 +44,7 @@ export function Sidebar() {
             {projects &&
               projects.map((project) => (
                 <SidebarItem
+                  key={project.id}
                   to={`/app/projects/${project.id}`}
                   name={project.name}
                 />

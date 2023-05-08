@@ -1,9 +1,13 @@
-import { Suspense } from 'react';
-import { QueryErrorResetBoundary } from 'react-query';
-import { LoadingView } from './LoadingView';
-import { ErrorBoundary } from './ErrorBoundary';
+import { Suspense } from "react";
+import { QueryErrorResetBoundary } from "react-query";
+import { LoadingView } from "./LoadingView";
+import { ErrorBoundary } from "./ErrorBoundary";
 
-export const QueryBoundaries = ({ children }: { children: React.ReactNode }) => (
+export const QueryBoundaries = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
       <ErrorBoundary onReset={reset}>

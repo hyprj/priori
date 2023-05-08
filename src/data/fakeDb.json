@@ -7,6 +7,27 @@
       "sections": [
         {
           "name": "Section 1",
+          "id": "section3",
+          "order": 3,
+          "tasks": [
+            {
+              "name": "Task 13",
+              "order": 1,
+              "id": "task13",
+              "note": "Note for Task 1",
+              "priority": 1
+            },
+            {
+              "name": "Task 23",
+              "order": 2,
+              "id": "task23",
+              "note": "Note for Task 2",
+              "priority": 2
+            }
+          ]
+        },
+        {
+          "name": "Section 1",
           "id": "section1",
           "order": 1,
           "tasks": [

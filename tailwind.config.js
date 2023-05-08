@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Anek Devanagari", "sans-serif"], //default font
+        sans: ["Roboto", "sans-serif"], //default font
         abhaya: ["Abhaya Libre", "serif"],
       },
     },

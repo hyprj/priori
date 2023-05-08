@@ -1,9 +1,15 @@
+export enum Priority {
+  Low = "low",
+  Medium = "medium",
+  High = "high",
+}
+
 export interface ITask {
   name: string;
   order: number;
   id: string;
   note?: string;
-  priority?: 1 | 2 | 3;
+  priority?: Priority;
 }
 
 export interface ISection {

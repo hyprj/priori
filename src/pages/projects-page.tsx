@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
-  const { data } = useQuery<IProject[]>("projects", getProjects, {
+  const {} = useQuery<IProject[]>("projects", getProjects, {
     suspense: true,
   });
-  return <Page title={"App"}>t</Page>;
+  return <Page>t</Page>;
 }
