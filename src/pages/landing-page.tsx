@@ -1,40 +1,23 @@
 import { Button } from "@components/button/Button";
-import { Menu, Transition } from "@headlessui/react";
-import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Fragment } from "react";
+import { useUser } from "@features/auth/useUser";
 import { Link } from "react-router-dom";
+import { Page } from "@layouts/Page/Page";
 
 export function LandingPage() {
+  // const navigate = useNavigate();
+  const user = useUser();
+
   return (
-    <main>
-      <header className="flex bg-neutral-100 sticky top-0  w-full justify-between items-center px-4 py-2 ">
-        <div />
-        <h1 className="text-2xl font-abhaya font-bold hidden lg:block">
-          Priori
-        </h1>
-        <Menu as="div" className="relative">
-          <div>
-            <Menu.Button>
-              <UserCircleIcon className="w-6 h-6 inline-block" />
-              <ChevronDownIcon className="w-6 h-6 inline-block " />
-            </Menu.Button>
-          </div>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute right-0">
-              <Menu.Item>{() => <div>active</div>}</Menu.Item>
-            </Menu.Items>
-          </Transition>
-        </Menu>
-      </header>
-      <section className="py-32 flex flex-col items-center text-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1]">
+    <Page noSidebar>
+      {user && (
+        <Link
+          to="/app"
+          className="fixed bg-blue-400 w-full text-center text-white p-1"
+        >
+          You are signed in. Click to go to app
+        </Link>
+      )}
+      <section className="py-32 w-full flex flex-col items-center text-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1]">
         <h2 className="text-3xl md:text-5xl leading-snug font-bold mb-8">
           Organize your tasks, stay focused,
           <br /> achieve your goals.
@@ -77,6 +60,6 @@ export function LandingPage() {
           <Link to="/app">Start working as a guest</Link>
         </Button>
       </section>
-    </main>
+    </Page>
   );
 }

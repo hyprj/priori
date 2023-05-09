@@ -7,11 +7,13 @@ export const variants = {
   warning: "bg-yellow-500 hover:bg-yellow-600 text-white",
   action:
     "bg-red-500/90 hover:bg-red-600 text-white disabled:bg-red-300 disabled:cursor-not-allowed",
+  gray: "bg-gray-800 hover:bg-gray-600 text-white",
+  white: "bg-white hover:bg-gray-100 text-gray-800",
 };
 
 export const sizes = {
-  xs: "py-1 px-3 text-xs mx-1",
-  sm: "py-[4px] px-4 text-sm mx-1",
+  xs: "py-1 px-3 text-xs ",
+  sm: "py-[4px] px-4 text-sm ",
   md: "py-2 px-5 text-md",
   lg: "py-2 px-7 text-lg",
 };
@@ -31,7 +33,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`rounded-lg   ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`rounded-lg whitespace-nowrap   ${variants[variant]} ${sizes[size]} ${className}`}
       {...rest}
     >
       {children}

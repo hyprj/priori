@@ -6,6 +6,7 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
+      "@store": path.resolve(__dirname, "./src/store"),
       "@services": path.resolve(__dirname, "./src/services"),
       "@layouts": path.resolve(__dirname, "./src/layouts"),
       "@components": path.resolve(__dirname, "./src/components"),
@@ -16,5 +17,6 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
+  base: "/priori/",
   plugins: [react()],
 });

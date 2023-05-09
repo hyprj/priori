@@ -4,15 +4,12 @@ import { SidebarItem } from "./SidebarItem";
 import { SidebarNav } from "./SidebarNav";
 import { useEffect } from "react";
 import { SideBarGroup } from "./SidebarGroup";
-import { getProjects } from "@services/api";
-import { useQuery } from "react-query";
-import { IProject } from "src/types/types";
 
 export function Sidebar() {
   const { isOpen, toggle, close } = useSidebarContext();
-  const { data: projects } = useQuery<IProject[]>("projects", getProjects, {
-    suspense: true,
-  });
+  // const { data: projects } = useQuery<IProject[]>("projects", getProjects, {
+  //   suspense: true,
+  // });
 
   useEffect(() => {
     const width = window.screen.width;
@@ -41,14 +38,14 @@ export function Sidebar() {
         </SidebarNav>
         <SideBarGroup title="Projekty">
           <SidebarNav>
-            {projects &&
+            {/* {projects &&
               projects.map((project) => (
                 <SidebarItem
                   key={project.id}
                   to={`/app/projects/${project.id}`}
                   name={project.name}
                 />
-              ))}
+              ))} */}
           </SidebarNav>
         </SideBarGroup>
       </aside>

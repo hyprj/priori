@@ -7,6 +7,9 @@ export default {
         sans: ["Roboto", "sans-serif"], //default font
         abhaya: ["Abhaya Libre", "serif"],
       },
+      backgroundImage: {
+        heavyRain: "linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%)",
+      },
     },
   },
   plugins: [],
