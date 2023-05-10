@@ -37,10 +37,10 @@ export function Sidebar() {
       >
         <XMarkIcon onClick={toggle} className="h-8 ml-auto lg:hidden" />
         <SidebarNav>
-          <SidebarItem to="/app" name="Strona główna" />
-          <SidebarItem to="/app/projects" name="Projekty" />
+          <SidebarItem to="/app" name="Dashboard" />
+          <SidebarItem to="/app/projects" name="Projects" />
         </SidebarNav>
-        <SideBarGroup title="Projekty">
+        <SideBarGroup title="Projekts">
           <SidebarNav>
             {projects &&
               projects.map((project) => (
