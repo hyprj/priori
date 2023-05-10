@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { IProject, Priority, ITask } from "../../types/types";
 import { createTask } from "@services/db";
+import { Overlay } from "@components/overlay/Overlay";
 
 export function Project({ project }: { project: IProject }) {
   return (
@@ -100,10 +101,7 @@ export function AddTask({ sectionId }: { sectionId: string }) {
       )}
       {isActive && (
         <>
-          <div
-            className="fixed z-0 inset-0"
-            onClick={() => setIsActive(false)}
-          ></div>
+          <Overlay onClick={() => setIsActive(false)} />
           <div className="relative z-10">
             <AddTaskDialog
               onSubmit={handleSubmit}
