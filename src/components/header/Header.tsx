@@ -77,7 +77,7 @@ export function Header() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute flex flex-col gap-1 right-0 bg-white shadow p-1  rounded-lg">
+              <Menu.Items className="absolute min-w-[8rem] flex flex-col gap-1 right-0 bg-white shadow p-1  rounded-lg">
                 <Menu.Item>
                   <>
                     {user ? (
