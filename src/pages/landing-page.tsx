@@ -1,22 +1,10 @@
 import { Button } from "@components/button/Button";
-import { useUser } from "@features/auth/useUser";
 import { Link } from "react-router-dom";
 import { Page } from "@layouts/Page/Page";
 
 export function LandingPage() {
-  // const navigate = useNavigate();
-  const user = useUser();
-
   return (
     <Page noSidebar>
-      {user && (
-        <Link
-          to="/app"
-          className="fixed bg-blue-400 w-full text-center text-white p-1"
-        >
-          You are signed in. Click to go to app
-        </Link>
-      )}
       <section className="py-32 w-full flex flex-col items-center text-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1]">
         <h2 className="text-3xl md:text-5xl leading-snug font-bold mb-8">
           Organize your tasks, stay focused,

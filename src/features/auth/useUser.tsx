@@ -1,4 +1,4 @@
-import { supabase } from "@services/auth";
+import { supabase } from "@services/db";
 import { useQuery } from "react-query";
 
 interface User {

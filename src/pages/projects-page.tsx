@@ -1,6 +1,6 @@
 import { useUser } from "@features/auth/useUser";
 import { Page } from "@layouts/Page/Page";
-import { getProjects } from "@services/api";
+import { getProjects } from "@services/db";
 import { useQuery } from "react-query";
 import { IProject } from "src/types/types";
 

@@ -1,14 +1,16 @@
-export enum Priority {
-  Low = "low",
-  Medium = "medium",
-  High = "high",
-}
+// export enum Priority {
+//   Low = "low",
+//   Medium = "medium",
+//   High = "high",
+// }
+export type Priority = 1 | 2 | 3;
 
 export interface ITask {
   name: string;
   order: number;
   id: string;
-  note?: string;
+  section_id: string;
+  note: string | null;
   priority?: Priority;
 }
 
@@ -17,6 +19,7 @@ export interface ISection {
   id: string;
   order: number;
   tasks: ITask[];
+  project_id: string;
 }
 
 export interface IProject {

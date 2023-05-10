@@ -5,7 +5,7 @@ import { SidebarNav } from "./SidebarNav";
 import { useEffect } from "react";
 import { SideBarGroup } from "./SidebarGroup";
 import { useQuery } from "react-query";
-import { getProjects } from "@services/api";
+import { getProjects } from "@services/db";
 import { useUser } from "@features/auth/useUser";
 
 export function Sidebar() {

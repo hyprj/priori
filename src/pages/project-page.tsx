@@ -1,7 +1,7 @@
 import { useUser } from "@features/auth/useUser";
 import { Project } from "@features/project/Project";
 import { Page } from "@layouts/Page/Page";
-import { getProject } from "@services/api";
+import { getProject } from "@services/db";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { IProject, Priority, ITask } from "../../types/types";
+import { createTask } from "@services/db";
 
 export function Project({ project }: { project: IProject }) {
   return (
@@ -44,7 +45,7 @@ export function Project({ project }: { project: IProject }) {
                 </div>
               ))}
             <footer>
-              <AddTask projectId={project.id} sectionId={section.id} />
+              <AddTask sectionId={section.id} />
             </footer>
           </section>
         ))}
@@ -58,31 +59,23 @@ export interface Inputs {
   priority: Priority;
 }
 
-export function AddTask({
-  projectId,
-  sectionId,
-}: {
-  projectId: string;
-  sectionId: string;
-}) {
+export function AddTask({ sectionId }: { sectionId: string }) {
   const [isActive, setIsActive] = useState(false);
-  const path = `/projects/${projectId}/sections/${sectionId}/tasks`;
-  const { mutateAsync } = useMutation((task: ITask) => createTask(path, task));
-
-  const createTask = async (path: string, task: ITask) => {
-    console.log(path, task);
-  };
+  const { mutateAsync, isSuccess } = useMutation((task: Omit<ITask, "id">) =>
+    createTask(task)
+  );
 
   const handleSubmit = async (data: Inputs) => {
-    const task: ITask = {
-      id: Math.random().toString(),
+    const task: Omit<ITask, "id"> = {
       name: data.name,
-      note: data.note,
-      priority: data.priority || Priority.Low,
+      note: data.note || null,
+      priority: data.priority,
+      section_id: sectionId,
       order: 0,
     };
     console.log(data);
     await mutateAsync(task);
+    console.log(isSuccess);
     setIsActive(false);
   };
 
@@ -153,7 +146,7 @@ export function AddTaskDialog({
           <div className="">
             <p className="text-sm font-semibold">priority</p>
             <select {...register("priority")}>
-              <option defaultChecked value="low">
+              <option defaultChecked value={1}>
                 low
               </option>
               <option value="medium">medium</option>
