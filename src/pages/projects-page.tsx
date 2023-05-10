@@ -1,7 +1,9 @@
+import { Container } from "@components/container/Container";
 import { useUser } from "@features/auth/useUser";
 import { Page } from "@layouts/Page/Page";
 import { getProjects } from "@services/db";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
@@ -18,26 +20,30 @@ export function ProjectsPage() {
     return null;
   }
 
-  console.log(projects);
-
   return (
     <Page>
-      <div>
-        <div></div>
-        <section>
-          {projects.map((project) => (
-            <div>
-              <h3>{project.name}</h3>
-              <p>
-                {`tasks: ${project.sections.reduce(
-                  (acc, proj) => acc + proj.tasks.length,
-                  0
-                )}`}
-              </p>
-            </div>
-          ))}
-        </section>
-      </div>
+      <Container>
+        <div className="my-16">
+          <h3 className="text-3xl font-semibold">Projects</h3>
+          <section className="mt-8">
+            {projects.map((project) => (
+              <Link to={`/app/projects/${project.id}`}>
+                <div className="my-4 hover:bg-neutral-100 p-2 rounded-lg">
+                  <h4 className="text-xl font-semibold">{project.name}</h4>
+                  <p>
+                    {`${project.sections.reduce(
+                      (acc, proj) => acc + proj.tasks.length,
+                      0
+                    )} tasks`}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </section>
+          {/* TODO: add new project dialog */}
+          <div>add new project</div>
+        </div>
+      </Container>
     </Page>
   );
 }
