@@ -1,15 +1,31 @@
-import axios from "axios";
-import { ITask } from "src/types/types";
+import { IProject } from "src/types/types";
+import { supabase } from "./auth";
 
-const API_URL =
-  import.meta.env.MODE === "production" ? "" : "http://localhost:3000";
+export async function getProjects(userId: string): Promise<IProject[]> {
+  const { data, error } = await supabase
+    .from("project")
+    .select("*, sections(*, tasks(*))")
+    .eq("user_id", userId);
 
-const axiosApi = axios.create({ baseURL: API_URL });
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as IProject[];
+}
 
-export const getProjects = async () => (await axiosApi.get("/projects")).data;
+export async function getProject(
+  userId: string,
+  projectId: string
+): Promise<IProject[]> {
+  const { data, error } = await supabase
+    .from("project")
+    .select("*, sections(*, tasks(*))")
+    .match({ user_id: userId, id: projectId });
 
-export const getProject = async (id: string) =>
-  (await axiosApi.get(`/projects/${id}`)).data;
+  console.log(data, error);
 
-export const createTask = async (path: string, task: ITask) =>
-  (await axiosApi.post(path, task)).data;
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as IProject[];
+}

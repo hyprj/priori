@@ -1,6 +1,5 @@
 import { Button } from "@components/button/Button";
 import { CheckCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { createTask } from "@services/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -69,6 +68,10 @@ export function AddTask({
   const [isActive, setIsActive] = useState(false);
   const path = `/projects/${projectId}/sections/${sectionId}/tasks`;
   const { mutateAsync } = useMutation((task: ITask) => createTask(path, task));
+
+  const createTask = async (path: string, task: ITask) => {
+    console.log(path, task);
+  };
 
   const handleSubmit = async (data: Inputs) => {
     const task: ITask = {

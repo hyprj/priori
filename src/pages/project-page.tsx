@@ -1,18 +1,24 @@
+import { useUser } from "@features/auth/useUser";
 import { Project } from "@features/project/Project";
 import { Page } from "@layouts/Page/Page";
 import { getProject } from "@services/api";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { IProject } from "src/types/types";
 
 export function ProjectPage() {
-  const { id } = useParams<{ id: string }>();
-  const { data: project } = useQuery<IProject>(
-    ["projects", id],
-    () => getProject(id as string),
-    {
-      suspense: true,
-    }
+  const user = useUser();
+
+  if (!user?.id) {
+    return null;
+  }
+  const { id: projectId } = useParams<{ id: string }>();
+
+  if (!projectId) return null;
+
+  const { data: project } = useQuery(
+    "project",
+    () => getProject(user.id, projectId),
+    { suspense: true }
   );
 
   if (!project) {
@@ -21,7 +27,7 @@ export function ProjectPage() {
 
   return (
     <Page>
-      <Project project={project} />
+      <Project project={project[0]} />
     </Page>
   );
 }

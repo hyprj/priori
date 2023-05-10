@@ -5,7 +5,7 @@ export function Page({
   noSidebar,
 }: {
   children: React.ReactNode;
-  noSidebar: boolean;
+  noSidebar?: boolean;
 }) {
   const isOpen = noSidebar ? false : useSidebarContext().isOpen;
   return (

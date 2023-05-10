@@ -12,15 +12,15 @@ async function getUser() {
   try {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (user) {
-      const mappedUser: User = {
+      const flattenUser: User = {
         id: user.id,
         name: user.user_metadata.full_name,
         avatar_url: user.user_metadata.avatar_url,
         user_name: user.user_metadata.user_name,
       };
-      return mappedUser;
+      return flattenUser;
     }
-    return null;
+    throw Error("User not found");
   } catch (err: unknown) {
     console.error("err", err);
     return null;
@@ -28,18 +28,15 @@ async function getUser() {
 }
 
 export function useUser(): User | null {
-  const { data: user } = useQuery<User | null>(
-    "user",
-    async (): Promise<User | null> => getUser(),
-    {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      onError: () => {
-        return null;
-      },
-    }
-  );
+  const { data: user } = useQuery<User | null>("user", getUser, {
+    suspense: true,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    onError: () => {
+      return null;
+    },
+  });
 
   return user || null;
 }
