@@ -40,7 +40,7 @@ export function Sidebar() {
           <SidebarItem to="/app" name="Dashboard" />
           <SidebarItem to="/app/projects" name="Projects" />
         </SidebarNav>
-        <SideBarGroup title="Projekts">
+        <SideBarGroup title="Projects">
           <SidebarNav>
             {projects &&
               projects.map((project) => (
