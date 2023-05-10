@@ -1,6 +1,7 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { IProject } from "src/types/types";
 import { SectionFooter } from "./SectionFooter";
+import { AddSection } from "./AddSection";
 
 export function Project({ project }: { project: IProject }) {
   return (
@@ -8,7 +9,8 @@ export function Project({ project }: { project: IProject }) {
       {project.sections
         .sort((a, b) => a.order - b.order)
         .map((section) => (
-          <section className="m-4 mb-8" key={section.id}>
+          <section className="m-4" key={section.id}>
+            <AddSection />
             <header className="font-semibold mb-2 text-md border-b-[1px] border-slate-200 flex items-baseline gap-6">
               <span>{section.name}</span>
               <span className="text-xs text-gray-500">
@@ -43,6 +45,7 @@ export function Project({ project }: { project: IProject }) {
             <SectionFooter sectionId={section.id} />
           </section>
         ))}
+      <AddSection />
     </div>
   );
 }
