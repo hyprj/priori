@@ -12,6 +12,7 @@ export const variants = {
 };
 
 export const sizes = {
+  xxs: "text-xs py-[1px] px-3",
   xs: "py-1 px-3 text-xs ",
   sm: "py-[4px] px-4 text-sm ",
   md: "py-2 px-5 text-md",

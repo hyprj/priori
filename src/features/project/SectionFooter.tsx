@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import { Priority, ITask } from "src/types/types";
 import { AddTaskDialog } from "./AddTaskDialog";
+import { Button } from "@components/button/Button";
 
 export interface AddTaskInputs {
   name: string;
@@ -14,7 +15,7 @@ export interface AddTaskInputs {
 
 export function SectionFooter({ sectionId }: { sectionId: string }) {
   const [isActive, setIsActive] = useState(false);
-  const { mutateAsync, isSuccess } = useMutation((task: Omit<ITask, "id">) =>
+  const { mutateAsync } = useMutation((task: Omit<ITask, "id">) =>
     createTask(task)
   );
 
@@ -26,9 +27,7 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
       section_id: sectionId,
       order: 0,
     };
-    console.log(data);
     await mutateAsync(task);
-    console.log(isSuccess);
     setIsActive(false);
   };
 
@@ -45,11 +44,13 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
   return (
     <footer>
       {!isActive && (
-        <PlusIcon
-          className="h-6"
-          strokeWidth={0.5}
-          onClick={() => setIsActive(true)}
-        />
+        <Button variant="white" size="xxs">
+          <PlusIcon
+            className="h-6"
+            strokeWidth={0.5}
+            onClick={() => setIsActive(true)}
+          />
+        </Button>
       )}
       {isActive && (
         <>
