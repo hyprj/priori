@@ -36,7 +36,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0  w-full ">
+      <header className="sticky top-0 z-40  w-full ">
         <div className="  flex bg-neutral-100  justify-between items-center px-4 py-1 ">
           <div className="flex items-center gap-4 ">
             {user && (

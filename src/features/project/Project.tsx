@@ -10,7 +10,10 @@ export function Project({ project }: { project: IProject }) {
         .sort((a, b) => a.order - b.order)
         .map((section) => (
           <section className="m-4" key={section.id}>
-            <AddSection />
+            <AddSection
+              projectId={project.id}
+              order={project.sections.length + 1}
+            />
             <header className="font-semibold mb-2 text-md border-b-[1px] border-slate-200 flex items-baseline gap-6">
               <span>{section.name}</span>
               <span className="text-xs text-gray-500">
@@ -45,7 +48,7 @@ export function Project({ project }: { project: IProject }) {
             <SectionFooter sectionId={section.id} />
           </section>
         ))}
-      <AddSection />
+      <AddSection projectId={project.id} order={project.sections.length + 1} />
     </div>
   );
 }

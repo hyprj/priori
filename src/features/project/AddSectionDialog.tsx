@@ -23,7 +23,7 @@ export function AddSectionDialog({
             {...register("section_name", { required: true })}
             className="outline-none mb-2 font-semibold text-sm"
             type="text"
-            placeholder="Task name"
+            placeholder="Section name"
           />
         </div>
         <div className="p-2 border-t-[1px] flex justify-between">

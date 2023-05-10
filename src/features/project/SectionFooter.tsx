@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { Priority, ITask } from "src/types/types";
 import { AddTaskDialog } from "./AddTaskDialog";
 import { Button } from "@components/button/Button";
+import { queryClient } from "../../main";
 
 export interface AddTaskInputs {
   name: string;
@@ -28,6 +29,7 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
       order: 0,
     };
     await mutateAsync(task);
+    queryClient.refetchQueries();
     setIsActive(false);
   };
 

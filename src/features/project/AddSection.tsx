@@ -1,11 +1,24 @@
 import { useState } from "react";
 import { AddSectionDialog, AddSectionInputs } from "./AddSectionDialog";
 import { Transition } from "@headlessui/react";
+import { useMutation } from "react-query";
+import { createSection } from "@services/db";
+import { queryClient } from "../../main";
 
-export function AddSection() {
+export function AddSection({
+  projectId,
+  order,
+}: {
+  projectId: string;
+  order: number;
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const onAddSection = ({ section_name }: AddSectionInputs) => {
-    console.log(section_name);
+  const { mutateAsync } = useMutation((name: string) =>
+    createSection({ name, project_id: projectId, order })
+  );
+  const onAddSection = async ({ section_name }: AddSectionInputs) => {
+    await mutateAsync(section_name);
+    queryClient.refetchQueries();
     setIsOpen(false);
   };
   return (
