@@ -1,3 +1,4 @@
+console.log("dupa kurwa");
 import { IProject, ISection } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
@@ -11,7 +12,7 @@ export const supabase = createClient<Database>(
 supabase
   .channel("any")
   .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-    console.log("Change received!", payload);
+    //TODO: handle events
   })
   .subscribe();
 
@@ -22,7 +23,6 @@ export const login = async () => {
       redirectTo: "https://hyprj-priori.netlify.app/",
     },
   });
-
   if (error) {
     throw new Error(error.message);
   }
