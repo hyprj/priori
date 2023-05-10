@@ -1,3 +1,4 @@
+import { Container } from "@components/container/Container";
 import { useUser } from "@features/auth/useUser";
 import { Project } from "@features/project/Project";
 import { Page } from "@layouts/Page/Page";
@@ -27,7 +28,9 @@ export function ProjectPage() {
 
   return (
     <Page>
-      <Project project={project[0]} />
+      <Container>
+        <Project project={project[0]} />
+      </Container>
     </Page>
   );
 }
