@@ -31,11 +31,11 @@ export function Sidebar() {
         }
       />
       <aside
-        className={`fixed bg-neutral-50 z-50 top-0 pt-16 lg:top-auto transition-transform ${
+        className={`fixed top-0 z-50 bg-neutral-50 pt-16 transition-transform dark:bg-slate-700/80 lg:top-auto ${
           isOpen ? "" : "-translate-x-56"
-        } 500ms bg-white h-full shadow-sm shadow-zinc-400 pt-4 px-4 flex-shrink-0 font-abhaya w-56`}
+        } 500ms  h-full w-56 flex-shrink-0 px-4 pt-4 font-abhaya shadow-sm `}
       >
-        <XMarkIcon onClick={toggle} className="h-8 ml-auto lg:hidden" />
+        <XMarkIcon onClick={toggle} className="ml-auto h-8 lg:hidden" />
         <SidebarNav>
           <SidebarItem to="/app" name="Dashboard" />
           <SidebarItem to="/app/projects" name="Projects" />

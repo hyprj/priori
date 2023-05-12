@@ -46,7 +46,7 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
   return (
     <footer>
       {!isActive && (
-        <Button variant="white" size="xxs">
+        <Button variant="primary" size="xxs">
           <PlusIcon
             className="h-6"
             strokeWidth={0.5}

@@ -1,7 +1,6 @@
 export const variants = {
-  primary: "bg-primary-light hover:bg-primary text-white",
-  neutral:
-    "bg-neutral-200 text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800",
+  primary: "bg-cl-bg/10 hover:bg-cl-bg/90 text-white",
+  neutral: "hover:bg-neutral-300 dark:bg-white/10 hover:dark:bg-white/20",
   danger: "bg-red-500 hover:bg-red-700 text-white",
   success: "bg-green-500 hover:bg-green-700 text-white",
   warning: "bg-yellow-500 hover:bg-yellow-600 text-white",
@@ -29,12 +28,12 @@ export function Button({
   children,
   variant = "neutral",
   size = "sm",
-  className,
+  className = "",
   ...rest
 }: ButtonProps) {
   return (
     <button
-      className={`rounded-lg whitespace-nowrap   ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`whitespace-nowrap rounded-lg  ${variants[variant]} ${sizes[size]} ${className}`}
       {...rest}
     >
       {children}

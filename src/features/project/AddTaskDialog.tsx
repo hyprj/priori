@@ -14,24 +14,24 @@ export function AddTaskDialog({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="border-[1px] rounded-lg">
-        <div className="flex p-3 flex-col">
+      <div className="rounded-lg border-[1px] dark:border-white/10">
+        <div className="flex flex-col p-3">
           <input
             {...register("name", { required: true })}
-            className="outline-none mb-2 font-semibold text-sm"
+            className="mb-2 text-sm font-semibold outline-none"
             type="text"
             placeholder="Task name"
           />
           <textarea
             {...register("note")}
-            className="text-xs outline-none mb-1 w-full text-gray-600 resize-y"
+            className="mb-1 w-full resize-y text-xs text-gray-600 outline-none"
             placeholder="Note"
           />
         </div>
-        <div className="p-2 border-t-[1px] flex justify-between">
+        <div className="flex justify-between border-t-[1px] p-2 dark:border-white/10">
           <div className="">
             <p className="text-sm font-semibold">priority</p>
-            <select {...register("priority")}>
+            <select className="dark:bg-slate-700" {...register("priority")}>
               <option defaultChecked value={1}>
                 low
               </option>

@@ -39,12 +39,12 @@ export function AddSection({
       </Transition>
       {!isOpen && (
         <div
-          className="flex transition-opacity hover:cursor-pointer  items-center mx-auto justify-center w-[80%] gap-4 opacity-0 text-red-600/70 py-2 hover:opacity-100"
+          className="mx-auto flex w-[80%]  items-center justify-center gap-4 py-2 text-red-600/70 opacity-0 transition-opacity hover:cursor-pointer hover:opacity-100 dark:text-red-400"
           onClick={() => setIsOpen(true)}
         >
-          <div className="h-[1.5px] rounded bg-red-600/70 grow"></div>
+          <div className="h-[1.5px] grow rounded bg-red-600/70 dark:bg-red-400"></div>
           <div className="font-semibold">Add section</div>
-          <div className="h-[1.5px] rounded bg-red-600/70 grow"></div>
+          <div className="h-[1.5px] grow rounded bg-red-600/70 dark:bg-red-400"></div>
         </div>
       )}
     </>

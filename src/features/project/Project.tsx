@@ -14,7 +14,7 @@ export function Project({ project }: { project: IProject }) {
               projectId={project.id}
               order={project.sections.length + 1}
             />
-            <header className="font-semibold mb-2 text-md border-b-[1px] border-slate-200 flex items-baseline gap-6">
+            <header className="text-md mb-2 flex items-baseline gap-6 border-b-[1px] font-semibold dark:border-white/10">
               <span>{section.name}</span>
               <span className="text-xs text-gray-500">
                 {`${section.tasks.length} tasks`}
@@ -26,19 +26,21 @@ export function Project({ project }: { project: IProject }) {
                 <div
                   key={task.id}
                   data-task-id={task.id}
-                  className="my-4 border-b-[1px] border-slate-200"
+                  className="my-4 border-b-[1px] dark:border-white/10"
                 >
                   <div className="relative">
                     <div className="absolute -left-7">m</div>
                     <div className="flex">
                       <CheckCircleIcon
-                        className="h-6 mr-2 text-gray-400"
+                        className="mr-2 h-6 text-gray-400"
                         strokeWidth={0.5}
                       />
                       <div>
                         <p className="pt-[3px]">{task.name}</p>
                         {task.note && (
-                          <p className="text-sm text-gray-700">{task.note}</p>
+                          <p className="text-cl-text-soft text-sm">
+                            {task.note}
+                          </p>
                         )}
                       </div>
                     </div>

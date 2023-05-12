@@ -12,6 +12,7 @@ import { Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { queryClient } from "../../main";
 import { login, signOut } from "@services/db";
+import { ToggleThemeButton } from "@features/theme/ToggleThemeButton";
 
 export function Header() {
   const { toggle } = useSidebarContext();
@@ -36,8 +37,8 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40  w-full ">
-        <div className="  flex bg-neutral-100  justify-between items-center px-4 py-1 ">
+      <header className="text-primary sticky top-0 z-40  w-full ">
+        <div className="flex items-center  justify-between bg-neutral-100 px-4 py-1 dark:bg-slate-700 ">
           <div className="flex items-center gap-4 ">
             {user && (
               <>
@@ -50,22 +51,22 @@ export function Header() {
               </>
             )}
           </div>
-          <h1 className="text-2xl font-abhaya font-bold hidden lg:block">
+          <h1 className="hidden font-abhaya text-2xl font-bold lg:block">
             Priori
           </h1>
           <Menu as="div" className="relative">
-            <div className="hover:bg-gray-200 rounded-md p-1">
+            <div className="rounded-md p-1 hover:bg-gray-200">
               <Menu.Button>
                 {user ? (
                   <img
-                    className="h-6 rounded-full inline-block"
+                    className="inline-block h-6 rounded-full"
                     src={user?.avatar_url}
                   />
                 ) : (
-                  <UserCircleIcon className="w-6 h-6 inline-block" />
+                  <UserCircleIcon className="inline-block h-6 w-6" />
                 )}
 
-                <ChevronDownIcon className="w-6 h-6 inline-block " />
+                <ChevronDownIcon className="inline-block h-6 w-6 " />
               </Menu.Button>
             </div>
             <Transition
@@ -77,7 +78,7 @@ export function Header() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute min-w-[8rem] flex flex-col gap-1 right-0 bg-white shadow p-1  rounded-lg">
+              <Menu.Items className="absolute right-0 flex min-w-[8rem] flex-col gap-1 rounded-lg bg-white p-1 shadow  dark:bg-slate-800">
                 <Menu.Item>
                   <>
                     {user ? (
@@ -87,6 +88,11 @@ export function Header() {
                     )}
                   </>
                 </Menu.Item>
+                <Menu.Item>
+                  <>
+                    <ToggleThemeButton />
+                  </>
+                </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>
@@ -94,7 +100,7 @@ export function Header() {
         {pathname === "/" && user && (
           <Link
             to="/app"
-            className=" bg-blue-400 w-full text-center inline-block text-white p-1"
+            className=" inline-block w-full bg-blue-400 p-1 text-center text-white"
           >
             You are signed in. Click to go to app
           </Link>

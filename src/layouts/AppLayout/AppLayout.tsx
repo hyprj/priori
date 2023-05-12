@@ -8,7 +8,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const user = useUser();
   return (
     <SidebarProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col transition-colors dark:bg-slate-800/95 dark:text-white">
         <Header />
         <main className="flex flex-grow">
           {user && <Sidebar />}

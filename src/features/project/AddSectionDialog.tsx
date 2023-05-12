@@ -17,16 +17,16 @@ export function AddSectionDialog({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="border-[1px] rounded-lg">
-        <div className="flex p-3 flex-col">
+      <div className="rounded-lg border-[1px] border-cl-neutral-200">
+        <div className="flex flex-col p-3">
           <input
             {...register("section_name", { required: true })}
-            className="outline-none mb-2 font-semibold text-sm"
+            className="mb-2 text-sm font-semibold outline-none"
             type="text"
             placeholder="Section name"
           />
         </div>
-        <div className="p-2 border-t-[1px] flex justify-between">
+        <div className="flex justify-between border-t-[1px] border-cl-neutral-200 p-2">
           <div className="flex gap-2">
             <Button onClick={onClose} type="button">
               Cancel

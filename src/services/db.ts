@@ -1,4 +1,3 @@
-console.log("dupa kurwa");
 import { IProject, ISection } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
@@ -11,7 +10,7 @@ export const supabase = createClient<Database>(
 
 supabase
   .channel("any")
-  .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
+  .on("postgres_changes", { event: "*", schema: "*" }, () => {
     //TODO: handle events
   })
   .subscribe();

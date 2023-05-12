@@ -28,7 +28,7 @@ export function ProjectsPage() {
           <section className="mt-8">
             {projects.map((project) => (
               <Link to={`/app/projects/${project.id}`}>
-                <div className="my-4 hover:bg-neutral-100 p-2 rounded-lg">
+                <div className="my-4 rounded-lg p-2 hover:bg-neutral-100 hover:dark:bg-white/10">
                   <h4 className="text-xl font-semibold">{project.name}</h4>
                   <p>
                     {`${project.sections.reduce(
