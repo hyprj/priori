@@ -1,56 +1,147 @@
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { IProject } from "src/types/types";
-import { SectionFooter } from "./SectionFooter";
-import { AddSection } from "./AddSection";
+import { IProject, ITask } from "src/types/types";
+import { useState } from "react";
+import { AddSection } from "./sections/AddSection";
+import {
+  getActiveItem,
+  getUpdatedRows,
+  moveTaskToSection,
+  orderProject,
+  reOrderTasks,
+  sortByOrder,
+} from "./utils";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  DragStartEvent,
+  UniqueIdentifier,
+  closestCorners,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { DragTaskOverlay } from "./overlay/DragTaskOverlay";
+import { ProjectSection } from "./sections/ProjectSection";
+import { updateTask } from "@services/db";
 
 export function Project({ project }: { project: IProject }) {
+  const [items, setItems] = useState(() => orderProject(project));
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const handleDragStart = (e: DragStartEvent) => {
+    setActiveId(e.active.id as string | null);
+  };
+
+  const handleDragOver = (e: DragOverEvent) => {
+    const { active, over } = e;
+    if (!active || !over) return;
+
+    const activeSectionId = active.data.current!.sortable.containerId;
+    const overSectionId = over.data.current!.sortable.containerId;
+
+    if (activeSectionId !== overSectionId) {
+      const clonedProject = structuredClone(items);
+      const [activeSection, overSection] = getSections(
+        clonedProject,
+        activeSectionId,
+        overSectionId
+      );
+      const task = activeSection!.tasks.find((task) => task.id === active.id);
+
+      if (!task || !activeSection || !overSection) return;
+
+      moveTaskToSection(task, activeSection, overSection);
+      setItems(clonedProject);
+    }
+  };
+
+  const handleDragEnd = async (e: DragEndEvent) => {
+    const { active, over } = e;
+
+    if (!active || !over) return;
+
+    const overSectionId = over.data?.current?.sortable?.containerId;
+
+    if (!overSectionId) return;
+
+    const clonedProject = structuredClone(items);
+    const clonedOverSection = clonedProject.sections.find(
+      (section) => section.id === overSectionId
+    );
+
+    const activeTaskId = active.id;
+
+    if (!clonedOverSection) return;
+
+    const droppedIndex = clonedOverSection.tasks.findIndex(
+      (task) => task.id === over.id
+    );
+
+    reOrderTasks(clonedOverSection.tasks, activeTaskId as string, droppedIndex);
+    sortByOrder(clonedOverSection.tasks);
+    setItems(clonedProject);
+    const updatedRows = getUpdatedRows(
+      project.sections,
+      clonedProject.sections
+    );
+
+    console.log(updatedRows);
+
+    await Promise.all(updatedRows.map(updateTask));
+    setActiveId(null);
+  };
+
+  const getSections = (
+    project: IProject,
+    activeSectionId: string,
+    overSectionId: string
+  ) => {
+    const activeSection = project.sections.find(
+      (section) => section.id === activeSectionId
+    );
+    const overSection = project.sections.find(
+      (section) => section.id === overSectionId
+    );
+    return [activeSection, overSection];
+  };
+
   return (
-    <div>
-      {project.sections
-        .sort((a, b) => a.order - b.order)
-        .map((section) => (
-          <section className="m-4" key={section.id}>
-            <AddSection
-              projectId={project.id}
-              order={project.sections.length + 1}
-            />
-            <header className="text-md mb-2 flex items-baseline gap-6 border-b-[1px] font-semibold dark:border-white/10">
-              <span>{section.name}</span>
-              <span className="text-xs text-gray-500">
-                {`${section.tasks.length} tasks`}
-              </span>
-            </header>
-            {section.tasks
-              .sort((a, b) => a.order - b.order)
-              .map((task) => (
-                <div
-                  key={task.id}
-                  data-task-id={task.id}
-                  className="my-4 border-b-[1px] dark:border-white/10"
-                >
-                  <div className="relative">
-                    <div className="absolute -left-7">m</div>
-                    <div className="flex">
-                      <CheckCircleIcon
-                        className="mr-2 h-6 text-gray-400"
-                        strokeWidth={0.5}
-                      />
-                      <div>
-                        <p className="pt-[3px]">{task.name}</p>
-                        {task.note && (
-                          <p className="text-cl-text-soft text-sm">
-                            {task.note}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            <SectionFooter sectionId={section.id} />
-          </section>
+    <DndContext
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+      collisionDetection={closestCorners}
+    >
+      <div>
+        {items.sections.map((section) => (
+          <div key={section.id}>
+            <SortableContext
+              items={section.tasks}
+              strategy={verticalListSortingStrategy}
+              id={section.id}
+            >
+              <ProjectSection
+                key={section.id}
+                freeOrder={project.sections.length + 1}
+                projectId={project.id}
+                section={section}
+                activeId={activeId}
+              />
+            </SortableContext>
+          </div>
         ))}
-      <AddSection projectId={project.id} order={project.sections.length + 1} />
-    </div>
+        <AddSection
+          projectId={project.id}
+          order={project.sections.length + 1}
+        />
+      </div>
+      <DragTaskOverlay
+        activeId={activeId as UniqueIdentifier}
+        task={
+          getActiveItem(activeId as UniqueIdentifier, items.sections) as ITask
+        }
+      />
+    </DndContext>
   );
 }

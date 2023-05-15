@@ -1,6 +1,6 @@
 import { Button } from "@components/button/Button";
 import { useForm } from "react-hook-form";
-import { AddTaskInputs } from "./SectionFooter";
+import { AddTaskInputs } from "../sections/SectionFooter";
 
 export function AddTaskDialog({
   onClose,

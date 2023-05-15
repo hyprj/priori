@@ -32,7 +32,7 @@ export const signOut = () => supabase.auth.signOut();
 
 export async function getProjects(userId: string): Promise<IProject[]> {
   const { data, error } = await supabase
-    .from("project")
+    .from("projects")
     .select("*, sections(*, tasks(*))")
     .eq("user_id", userId);
 
@@ -47,7 +47,7 @@ export async function getProject(
   projectId: string
 ): Promise<IProject[]> {
   const { data, error } = await supabase
-    .from("project")
+    .from("projects")
     .select("*, sections(*, tasks(*))")
     .match({ user_id: userId, id: projectId });
 
@@ -59,6 +59,18 @@ export async function getProject(
 
 export async function createTask(task: Omit<ITask, "id">) {
   const { data, error } = await supabase.from("tasks").insert([task]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+}
+
+export async function updateTask(task: ITask) {
+  const { data, error } = await supabase
+    .from("tasks")
+    .update(task)
+    .match({ id: task.id });
 
   if (error) {
     throw new Error(error.message);

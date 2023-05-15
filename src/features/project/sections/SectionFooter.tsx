@@ -4,9 +4,9 @@ import { createTask } from "@services/db";
 import { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import { Priority, ITask } from "src/types/types";
-import { AddTaskDialog } from "./AddTaskDialog";
+import { AddTaskDialog } from "../task/AddTaskDialog";
 import { Button } from "@components/button/Button";
-import { queryClient } from "../../main";
+import { queryClient } from "../../../main";
 
 export interface AddTaskInputs {
   name: string;

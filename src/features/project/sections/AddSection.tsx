@@ -3,7 +3,7 @@ import { AddSectionDialog, AddSectionInputs } from "./AddSectionDialog";
 import { Transition } from "@headlessui/react";
 import { useMutation } from "react-query";
 import { createSection } from "@services/db";
-import { queryClient } from "../../main";
+import { queryClient } from "../../../main";
 
 export function AddSection({
   projectId,

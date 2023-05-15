@@ -5,12 +5,12 @@ import { Page } from "@layouts/Page/Page";
 export function LandingPage() {
   return (
     <Page noSidebar>
-      <section className="py-32 w-full flex flex-col items-center text-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1]">
-        <h2 className="text-3xl md:text-5xl leading-snug font-bold mb-8">
+      <section className="flex w-full flex-col items-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1] py-32 text-center dark:bg-heavyRain-dark">
+        <h2 className="mb-8 text-3xl font-bold leading-snug md:text-5xl">
           Organize your tasks, stay focused,
           <br /> achieve your goals.
         </h2>
-        <p className="text-xl max-w-md">
+        <p className="max-w-md text-xl">
           Get more done with{" "}
           <b>
             <i>Priori</i>
@@ -30,7 +30,7 @@ export function LandingPage() {
             viewBox="0 0 24 24"
             strokeWidth={0.3}
             stroke="currentColor"
-            className="w-20 h-20"
+            className="h-20 w-20"
           >
             <path
               strokeLinecap="round"
@@ -40,7 +40,7 @@ export function LandingPage() {
           </svg>
         </div>
       </section>
-      <section className="py-8 pb-40 text-center bg-[#fff7d6]">
+      <section className="bg-[#fff7d6] py-8 pb-40 text-center dark:bg-slate-800">
         <div className="mb-8">
           <p>Welcome</p>
         </div>
