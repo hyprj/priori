@@ -4,14 +4,12 @@ import { CSS } from "@dnd-kit/utilities";
 export function SortableItem({
   id,
   children,
-  type,
 }: {
   id: string;
   children: React.ReactNode;
-  type: "task" | "section";
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: id, data: { type: type } });
+    useSortable({ id: id, data: { type: "task" } });
 
   const style = {
     transform: CSS.Transform.toString(transform),

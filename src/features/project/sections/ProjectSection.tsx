@@ -21,12 +21,12 @@ export function ProjectSection({
       <AddSection projectId={projectId} order={freeOrder} />
       <ProjectSectionHeader section={section} />
       {section.tasks.map((task) => (
-        <SortableItem key={task.id} id={task.id} type="task">
+        <SortableItem key={task.id} id={task.id}>
           <ProjectTask task={task} placeholderBg={task.id === activeId} />
         </SortableItem>
       ))}
       {section.tasks.length === 0 && (
-        <SortableItem id="PLACEHOLDER" type="task">
+        <SortableItem id="PLACEHOLDER">
           <div className="h-8"></div>
         </SortableItem>
       )}
