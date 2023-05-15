@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { ITask } from "src/types/types";
+import { ITask, priorityText } from "../../../types/types";
+import { PriorityListbox } from "@components/priorityListbox/PriorityListbox";
 
 export function ProjectTask({
   task,
@@ -19,11 +20,22 @@ export function ProjectTask({
     >
       <div className={`flex ${placeholderBg ? "opacity-0" : ""}`}>
         <CheckCircleIcon className="mr-2 h-6 text-gray-400" strokeWidth={0.5} />
-        <div>
-          <p className="pt-[3px]">{task.name}</p>
-          {task.note && (
-            <p className="text-cl-text-soft text-sm">{task.note}</p>
-          )}
+        <div className="flex flex-grow justify-between">
+          <div>
+            <p className="pt-[3px]">{task.name}</p>
+            {task.note && (
+              <p className="text-cl-text-soft text-sm">{task.note}</p>
+            )}
+          </div>
+          <div>
+            {task.priority && (
+              <PriorityListbox
+                selected={task.priority}
+                handleClick={() => {}}
+              />
+              // <p className="text-xs">{priorityText[task.priority]}</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
