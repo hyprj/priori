@@ -1,12 +1,12 @@
-import { Overlay } from "@components/overlay/Overlay";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { createTask } from "@services/db";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "react-query";
 import { Priority, ITask } from "src/types/types";
 import { AddTaskDialog } from "../task/AddTaskDialog";
 import { Button } from "@components/button/Button";
 import { queryClient } from "../../../main";
+import { FormContainer } from "@components/formContainer/FormContainer";
 
 export interface AddTaskInputs {
   name: string;
@@ -33,16 +33,6 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
     setIsActive(false);
   };
 
-  const handleEscape = (e: KeyboardEvent) =>
-    e.key === "Escape" && setIsActive(false);
-
-  useEffect(() => {
-    if (isActive) {
-      document.addEventListener("keydown", handleEscape);
-    }
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [isActive]);
-
   return (
     <footer>
       {!isActive && (
@@ -55,15 +45,16 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
         </Button>
       )}
       {isActive && (
-        <>
-          <Overlay onClick={() => setIsActive(false)} />
-          <div className="relative z-30">
+        <FormContainer
+          hasOverlay
+          onClose={() => setIsActive(false)}
+          form={
             <AddTaskDialog
               onSubmit={handleSubmit}
               onClose={() => setIsActive(false)}
             />
-          </div>
-        </>
+          }
+        />
       )}
     </footer>
   );
