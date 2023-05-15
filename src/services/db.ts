@@ -57,6 +57,16 @@ export async function getProject(
   return data as IProject[];
 }
 
+export async function createProject(userId: string, projectName: string) {
+  const { error } = await supabase
+    .from("projects")
+    .insert([{ user_id: userId, name: projectName }]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function createTask(task: Omit<ITask, "id">) {
   const { data, error } = await supabase.from("tasks").insert([task]);
 

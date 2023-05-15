@@ -1,5 +1,5 @@
 import { IProject, ITask } from "src/types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddSection } from "./sections/AddSection";
 import {
   getActiveItem,
@@ -31,8 +31,12 @@ import { ProjectSection } from "./sections/ProjectSection";
 import { updateTask } from "@services/db";
 
 export function Project({ project }: { project: IProject }) {
-  const [items, setItems] = useState(() => orderProject(project));
+  const [items, setItems] = useState(orderProject(project));
   const [activeId, setActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setItems(orderProject(project));
+  }, [project]);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { delay: 250, tolerance: 5 },

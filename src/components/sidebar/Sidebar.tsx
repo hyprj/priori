@@ -7,6 +7,8 @@ import { SideBarGroup } from "./SidebarGroup";
 import { useQuery } from "react-query";
 import { getProjects } from "@services/db";
 import { useUser } from "@features/auth/useUser";
+import { AddProject } from "@features/addProject/AddProject";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export function Sidebar() {
   const user = useUser()!;
@@ -40,7 +42,12 @@ export function Sidebar() {
           <SidebarItem to="/app" name="Dashboard" />
           <SidebarItem to="/app/projects" name="Projects" />
         </SidebarNav>
-        <SideBarGroup title="Projects">
+        <SideBarGroup
+          title="Projects"
+          headerElement={
+            <AddProject buttonContent={<PlusIcon className="h-3" />} />
+          }
+        >
           <SidebarNav>
             {projects &&
               projects.map((project) => (

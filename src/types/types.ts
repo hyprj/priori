@@ -28,7 +28,6 @@ export interface ISection {
 }
 
 export interface IProject {
-  display: "list" | "board";
   id: string;
   name: string;
   sections: ISection[];

@@ -33,7 +33,6 @@ export function ProjectTask({
                 selected={task.priority}
                 handleClick={() => {}}
               />
-              // <p className="text-xs">{priorityText[task.priority]}</p>
             )}
           </div>
         </div>
