@@ -14,7 +14,13 @@ export interface AddTaskInputs {
   priority: Priority;
 }
 
-export function SectionFooter({ sectionId }: { sectionId: string }) {
+export function SectionFooter({
+  sectionId,
+  freeOrder,
+}: {
+  sectionId: string;
+  freeOrder: number;
+}) {
   const [isActive, setIsActive] = useState(false);
   const { mutateAsync } = useMutation((task: Omit<ITask, "id">) =>
     createTask(task)
@@ -26,7 +32,7 @@ export function SectionFooter({ sectionId }: { sectionId: string }) {
       note: data.note || null,
       priority: data.priority,
       section_id: sectionId,
-      order: 0,
+      order: freeOrder,
     };
     await mutateAsync(task);
     queryClient.refetchQueries();

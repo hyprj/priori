@@ -30,7 +30,7 @@ export function ProjectSection({
           <div className="h-8"></div>
         </SortableItem>
       )}
-      <SectionFooter sectionId={section.id} />
+      <SectionFooter sectionId={section.id} freeOrder={freeOrder} />
     </section>
   );
 }

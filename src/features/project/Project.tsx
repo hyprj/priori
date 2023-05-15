@@ -34,8 +34,12 @@ export function Project({ project }: { project: IProject }) {
   const [items, setItems] = useState(() => orderProject(project));
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor);
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: { delay: 250, tolerance: 5 },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: { delay: 250, tolerance: 5 },
+  });
   const keyboardSensor = useSensor(KeyboardSensor);
 
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
