@@ -14,8 +14,13 @@ import {
   DragEndEvent,
   DragOverEvent,
   DragStartEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
   UniqueIdentifier,
   closestCorners,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -28,6 +33,12 @@ import { updateTask } from "@services/db";
 export function Project({ project }: { project: IProject }) {
   const [items, setItems] = useState(() => orderProject(project));
   const [activeId, setActiveId] = useState<string | null>(null);
+
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
 
   const handleDragStart = (e: DragStartEvent) => {
     setActiveId(e.active.id as string | null);
@@ -86,8 +97,6 @@ export function Project({ project }: { project: IProject }) {
       clonedProject.sections
     );
 
-    console.log(updatedRows);
-
     await Promise.all(updatedRows.map(updateTask));
     setActiveId(null);
   };
@@ -112,6 +121,7 @@ export function Project({ project }: { project: IProject }) {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
       collisionDetection={closestCorners}
+      sensors={sensors}
     >
       <div>
         {items.sections.map((section) => (

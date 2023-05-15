@@ -48,7 +48,6 @@ export function reOrderTasks(
   droppedIndex: number
 ) {
   const activeTaskOrder = tasks.findIndex((task) => task.id === activeTaskId);
-  console.log(activeTaskOrder, droppedIndex);
 
   if (droppedIndex > activeTaskOrder) {
     tasks.map((task) => {
@@ -103,17 +102,19 @@ export function getUpdatedRows(
 ) {
   const updatedRows: ITask[] = [];
 
-  const prevTasks = prevSections.reduce<ITask[]>((acc, section) => {
-    acc.push(...section.tasks);
-    return acc;
-  }, []);
+  const prevTasks = prevSections
+    .reduce<ITask[]>((acc, section) => {
+      acc.push(...section.tasks);
+      return acc;
+    }, [])
+    .sort((a, b) => (a.id > b.id ? -1 : a.id < b.id ? 1 : 0));
 
-  const currTasks = currSections.reduce<ITask[]>((acc, section) => {
-    acc.push(...section.tasks);
-    return acc;
-  }, []);
-
-  console.log(prevTasks, currTasks);
+  const currTasks = currSections
+    .reduce<ITask[]>((acc, section) => {
+      acc.push(...section.tasks);
+      return acc;
+    }, [])
+    .sort((a, b) => (a.id > b.id ? -1 : a.id < b.id ? 1 : 0));
 
   prevTasks.forEach((prevTask, index) => {
     if (
