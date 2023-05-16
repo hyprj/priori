@@ -66,30 +66,50 @@ export function reOrderTasks(
   tasks[activeTaskOrder].order = droppedIndex;
 }
 
-export function reOrderSections(
-  sections: ISection[],
-  activeSectionId: string,
-  droppedIndex: number
+/*****
+  for each item in updatedItems, check if it exists in prevItems and if it does, check if it has changed
+  if it has changed, add it to updatedRows, if it doesn't exist, add it to updatedRows
+
+  this function does not check for DELETED items.
+
+  @return updatedRows {T& { id: string }[]} 
+*/
+export function getUpdatedItems<T>(
+  prevItems: T & { id: string }[],
+  updatedItems: T & { id: string }[]
 ) {
-  const activeSectionOrder = sections.findIndex(
-    (section) => section.id === activeSectionId
-  );
+  const updatedRows: (T & { id: string })[] = [];
 
-  if (droppedIndex > activeSectionOrder) {
-    sections.map((section) => {
-      if (section.order > activeSectionOrder && section.order <= droppedIndex) {
-        section.order -= 1;
+  for (const updatedItem of updatedItems) {
+    const prevItem = prevItems.find((item) => item.id === updatedItem.id);
+    if (prevItem) {
+      if (JSON.stringify(prevItem) !== JSON.stringify(updatedItem)) {
+        updatedRows.push(updatedItem as T & { id: string });
       }
-    });
-  } else if (droppedIndex < activeSectionOrder) {
-    sections.map((section) => {
-      if (section.order < activeSectionOrder && section.order >= droppedIndex) {
-        section.order += 1;
-      }
-    });
+    } else {
+      updatedRows.push(updatedItem as T & { id: string });
+    }
   }
+  return updatedRows;
+}
 
-  sections[activeSectionOrder].order = droppedIndex;
+/***
+ * @param items {T[]}
+ * @param order {number}
+ * @returns changed items
+ */
+
+export function updateOrdersFromOrder<T extends { order: number }>(
+  items: T[],
+  order: number
+) {
+  const updatedItems = [];
+  for (const item of items) {
+    if (item.order >= order) {
+      updatedItems.push({ ...item, order: item.order + 1 });
+    }
+  }
+  return updatedItems;
 }
 
 export function sortByOrder<T extends { order: number }>(items: T[]) {

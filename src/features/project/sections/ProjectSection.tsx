@@ -8,17 +8,23 @@ import { SectionFooter } from "./SectionFooter";
 export function ProjectSection({
   projectId,
   section,
-  freeOrder,
+  sectionOrder,
   activeId,
+  sections,
 }: {
+  sections: ISection[];
   projectId: string;
   section: ISection;
-  freeOrder: number;
+  sectionOrder: number;
   activeId: string | null;
 }) {
   return (
     <section className="m-4" key={section.id}>
-      <AddSection projectId={projectId} order={freeOrder} />
+      <AddSection
+        sections={sections}
+        projectId={projectId}
+        sectionOrder={sectionOrder}
+      />
       <ProjectSectionHeader section={section} />
       {section.tasks.map((task) => (
         <SortableItem key={task.id} id={task.id}>
@@ -30,7 +36,10 @@ export function ProjectSection({
           <div className="h-8"></div>
         </SortableItem>
       )}
-      <SectionFooter sectionId={section.id} freeOrder={freeOrder} />
+      <SectionFooter
+        sectionId={section.id}
+        newTaskOrder={section.tasks.length}
+      />
     </section>
   );
 }
