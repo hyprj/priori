@@ -51,16 +51,12 @@ export function SectionFooter({
         </Button>
       )}
       {isActive && (
-        <FormContainer
-          hasOverlay
-          onClose={() => setIsActive(false)}
-          form={
-            <AddTaskDialog
-              onSubmit={handleSubmit}
-              onClose={() => setIsActive(false)}
-            />
-          }
-        />
+        <FormContainer hasOverlay onClose={() => setIsActive(false)}>
+          <AddTaskDialog
+            onSubmit={handleSubmit}
+            onClose={() => setIsActive(false)}
+          />
+        </FormContainer>
       )}
     </footer>
   );

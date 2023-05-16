@@ -1,8 +1,16 @@
 import { Button } from "@components/button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Page } from "@layouts/Page/Page";
+import { useUser } from "@features/auth/useUser";
 
 export function LandingPage() {
+  const user = useUser();
+  const navigate = useNavigate();
+
+  if (user) {
+    navigate("/app");
+  }
+
   return (
     <Page noSidebar>
       <section className="flex w-full flex-col items-center bg-gradient-to-b from-[#e2c2ff] to-[#ffc3e1] py-32 text-center dark:bg-heavyRain-dark">

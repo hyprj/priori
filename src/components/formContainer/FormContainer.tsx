@@ -2,13 +2,13 @@ import { Overlay } from "@components/overlay/Overlay";
 import { useEffect } from "react";
 
 type FormContainerProps =
-  | { form: React.ReactNode; hasOverlay?: undefined; onClose?: undefined }
-  | { hasOverlay: true; onClose: () => void; form: React.ReactNode };
+  | { children: React.ReactNode; hasOverlay?: undefined; onClose?: undefined }
+  | { hasOverlay: true; onClose: () => void; children: React.ReactNode };
 
 export function FormContainer({
   hasOverlay,
   onClose,
-  form,
+  children,
 }: FormContainerProps) {
   useEffect(() => {
     if (!onClose) return;
@@ -22,7 +22,7 @@ export function FormContainer({
   return (
     <>
       {hasOverlay && <Overlay onClick={onClose} />}
-      <div className="relative z-30">{form}</div>
+      <div className="relative z-30">{children}</div>
     </>
   );
 }

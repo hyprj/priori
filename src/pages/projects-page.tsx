@@ -1,4 +1,3 @@
-import { Button } from "@components/button/Button";
 import { Container } from "@components/container/Container";
 import { AddProject } from "@features/addProject/AddProject";
 import { useUser } from "@features/auth/useUser";
@@ -7,10 +6,6 @@ import { getProjects } from "@services/db";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { IProject } from "src/types/types";
-
-function AddProjectButton() {
-  return <Button variant="action">Add project</Button>;
-}
 
 export function ProjectsPage() {
   const user = useUser();
@@ -47,7 +42,6 @@ export function ProjectsPage() {
             ))}
           </section>
           <AddProject buttonContent="Add project" />
-          <div>add new project</div>
         </div>
       </Container>
     </Page>

@@ -2,7 +2,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useSidebarContext } from "./SidebarProvider";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarNav } from "./SidebarNav";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SideBarGroup } from "./SidebarGroup";
 import { useQuery } from "react-query";
 import { getProjects } from "@services/db";
@@ -12,16 +12,26 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 
 export function Sidebar() {
   const user = useUser()!;
-  const { isOpen, toggle, close } = useSidebarContext();
+  const { isOpen, toggle, close, open } = useSidebarContext();
   const { data: projects } = useQuery("projects", () => getProjects(user?.id), {
     suspense: true,
   });
+  const widthRef = useRef(window.innerWidth);
 
   useEffect(() => {
-    const width = window.screen.width;
-    if (width < 800) {
-      close();
+    const handleResize = () => {
+      widthRef.current = window.innerWidth;
+      if (window.innerWidth! < 800) {
+        close();
+      }
+    };
+
+    if (window.innerWidth > 800) {
+      open();
     }
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -39,8 +49,16 @@ export function Sidebar() {
       >
         <XMarkIcon onClick={toggle} className="ml-auto h-8 lg:hidden" />
         <SidebarNav>
-          <SidebarItem to="/app" name="Dashboard" />
-          <SidebarItem to="/app/projects" name="Projects" />
+          <SidebarItem
+            to="/app"
+            name="Dashboard"
+            onClick={() => widthRef.current! < 800 && close()}
+          />
+          <SidebarItem
+            to="/app/projects"
+            name="Projects"
+            onClick={() => widthRef.current! < 800 && close()}
+          />
         </SidebarNav>
         <SideBarGroup
           title="Projects"
@@ -55,6 +73,7 @@ export function Sidebar() {
                   key={project.id}
                   to={`/app/projects/${project.id}`}
                   name={project.name}
+                  onClick={() => widthRef.current! < 800 && close()}
                 />
               ))}
           </SidebarNav>

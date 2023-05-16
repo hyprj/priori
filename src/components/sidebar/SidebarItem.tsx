@@ -1,6 +1,14 @@
 import { To, useLocation, Link } from "react-router-dom";
 
-export function SidebarItem({ to, name }: { to: To; name: string }) {
+export function SidebarItem({
+  to,
+  name,
+  onClick,
+}: {
+  to: To;
+  name: string;
+  onClick: () => void;
+}) {
   const location = useLocation();
   const isActive = location.pathname === to;
   const variant = isActive
@@ -8,7 +16,7 @@ export function SidebarItem({ to, name }: { to: To; name: string }) {
     : "hover:dark:bg-slate-500 ";
 
   return (
-    <Link to={to}>
+    <Link to={to} onClick={onClick}>
       <li className={`${variant} my-1 w-full rounded py-1 pl-4  `}>{name}</li>
     </Link>
   );

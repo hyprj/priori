@@ -29,6 +29,7 @@ import {
 import { DragTaskOverlay } from "./overlay/DragTaskOverlay";
 import { ProjectSection } from "./sections/ProjectSection";
 import { updateTask } from "@services/db";
+import { ProjectHeader } from "./ProjectHeader";
 
 export function Project({ project }: { project: IProject }) {
   const [items, setItems] = useState(orderProject(project));
@@ -131,7 +132,8 @@ export function Project({ project }: { project: IProject }) {
       collisionDetection={closestCorners}
       sensors={sensors}
     >
-      <div>
+      <div className="mt-8">
+        <ProjectHeader project={project} />
         {items.sections.map((section) => (
           <div key={section.id}>
             <SortableContext

@@ -17,7 +17,7 @@ export function AddSectionDialog({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="rounded-lg border-[1px] border-cl-neutral-200">
+      <div className="border-cl-neutral-200 rounded-lg border-[1px]">
         <div className="flex flex-col p-3">
           <input
             {...register("section_name", { required: true })}
@@ -26,7 +26,7 @@ export function AddSectionDialog({
             placeholder="Section name"
           />
         </div>
-        <div className="flex justify-between border-t-[1px] border-cl-neutral-200 p-2">
+        <div className="border-cl-neutral-200 flex justify-between border-t-[1px] p-2">
           <div className="flex gap-2">
             <Button onClick={onClose} type="button">
               Cancel

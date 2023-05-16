@@ -13,6 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { queryClient } from "../../main";
 import { login, signOut } from "@services/db";
 import { ToggleThemeButton } from "@features/theme/ToggleThemeButton";
+import { ThemeButton } from "@components/themeButton/ThemeButton";
 
 export function Header() {
   const { toggle } = useSidebarContext();
@@ -90,7 +91,8 @@ export function Header() {
                 </Menu.Item>
                 <Menu.Item>
                   <>
-                    <ToggleThemeButton />
+                    {/* <ToggleThemeButton /> */}
+                    <ThemeButton />
                   </>
                 </Menu.Item>
               </Menu.Items>

@@ -25,7 +25,7 @@ export function PriorityListbox({
             <Listbox.Label className="w-full text-center text-xs font-semibold">
               Priority
             </Listbox.Label>
-            <Listbox.Button className="w-full rounded bg-neutral-100 px-1 py-[1px] text-xs">
+            <Listbox.Button className="w-full rounded bg-neutral-100 px-1 py-[1px] text-xs dark:bg-slate-600">
               {priorityText[priorityValue]}
             </Listbox.Button>
           </div>
@@ -36,7 +36,9 @@ export function PriorityListbox({
                   key={priority}
                   value={priority}
                   className={({ active }) =>
-                    `px-2  text-sm  ${active ? "bg-neutral-100" : ""}`
+                    `px-2  text-sm  ${
+                      active ? "bg-neutral-100 dark:bg-slate-500" : ""
+                    }`
                   }
                 >
                   {priorityText[priority]}
