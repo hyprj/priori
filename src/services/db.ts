@@ -1,7 +1,8 @@
-import { IProject, ISection } from "src/types/types";
+import { IProject, ISection, Optional, PartialExcept } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
+import { DBSection } from "src/types/dbTypes";
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -118,4 +119,17 @@ export async function createSection(section: Omit<ISection, "id" | "tasks">) {
     throw new Error(error.message);
   }
   return data;
+}
+
+export async function updateSection(
+  sectionFields: PartialExcept<DBSection, "id">
+) {
+  const { error } = await supabase
+    .from("sections")
+    .update(sectionFields)
+    .match({ id: sectionFields.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }

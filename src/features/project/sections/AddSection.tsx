@@ -2,22 +2,43 @@ import { useState } from "react";
 import { AddSectionDialog, AddSectionInputs } from "./AddSectionDialog";
 import { Transition } from "@headlessui/react";
 import { useMutation } from "react-query";
-import { createSection } from "@services/db";
+import { createSection, updateSection } from "@services/db";
 import { queryClient } from "../../../main";
+import { ISection, NewISection } from "src/types/types";
+import { updateOrdersFromOrder } from "../utils/utils";
+
+async function handleAddSection(sections: {
+  updated: ISection[];
+  new: NewISection;
+}) {
+  await Promise.all([
+    createSection(sections.new),
+    ...sections.updated.map((updated) =>
+      updateSection({ order: updated.order, id: updated.id })
+    ),
+  ]);
+  queryClient.refetchQueries();
+}
 
 export function AddSection({
   projectId,
-  order,
+  sectionOrder,
+  sections,
 }: {
   projectId: string;
-  order: number;
+  sectionOrder: number;
+  sections: ISection[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { mutateAsync } = useMutation((name: string) =>
-    createSection({ name, project_id: projectId, order })
-  );
+  const { mutateAsync } = useMutation(handleAddSection);
   const onAddSection = async ({ section_name }: AddSectionInputs) => {
-    await mutateAsync(section_name);
+    const updatedSections = updateOrdersFromOrder(sections, sectionOrder);
+    const newSection: NewISection = {
+      name: section_name,
+      project_id: projectId,
+      order: sectionOrder,
+    };
+    await mutateAsync({ new: newSection, updated: updatedSections });
     queryClient.refetchQueries();
     setIsOpen(false);
   };
