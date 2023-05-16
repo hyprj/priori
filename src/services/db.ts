@@ -67,6 +67,16 @@ export async function createProject(userId: string, projectName: string) {
   }
 }
 
+export async function deleteProject(projectId: string) {
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .match({ id: projectId });
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function createTask(task: Omit<ITask, "id">) {
   const { data, error } = await supabase.from("tasks").insert([task]);
 
