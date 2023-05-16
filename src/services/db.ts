@@ -67,6 +67,19 @@ export async function createProject(userId: string, projectName: string) {
   }
 }
 
+export async function updateProject(
+  projectFields: Partial<IProject> & { id: string }
+) {
+  const { error } = await supabase
+    .from("projects")
+    .update(projectFields)
+    .match({ id: projectFields.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function deleteProject(projectId: string) {
   const { error } = await supabase
     .from("projects")
