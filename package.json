@@ -7,6 +7,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
+    "test": "vitest",
     "dev-json-server": "concurrently \"json-server --watch ./src/data/fakeDb.json\" \"vite\"",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -19,6 +20,7 @@
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@supabase/supabase-js": "^2.21.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "axios": "^1.4.0",
     "json-server": "^0.17.3",
     "prettier-plugin-tailwindcss": "^0.2.8",
@@ -50,6 +52,7 @@
     "autoprefixer": "^10.4.14",
     "concurrently": "^8.0.1",
     "gh-pages": "^5.0.0",
+    "jsdom": "^22.0.0",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
@@ -57,6 +60,7 @@
     "supabase": "^1.57.4",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "vitest": "^0.31.0"
   }
 }
