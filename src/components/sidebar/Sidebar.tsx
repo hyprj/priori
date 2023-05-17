@@ -51,7 +51,7 @@ export function Sidebar() {
         <SidebarNav>
           <SidebarItem
             to="/app"
-            name="Dashboard"
+            name="Today"
             onClick={() => widthRef.current! < 800 && close()}
           />
           <SidebarItem

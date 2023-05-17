@@ -1,15 +1,18 @@
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { ITask } from "../../../types/types";
 import { PriorityListbox } from "@components/priorityListbox/PriorityListbox";
+import { DBPersonalTask } from "src/types/dbTypes";
+import { CheckIcon } from "@components/checkIcon/CheckIcon";
 
 export function ProjectTask({
   task,
   isDragged,
   placeholderBg = false,
+  onDone,
 }: {
-  task: ITask;
+  task: ITask | DBPersonalTask;
   isDragged?: boolean;
   placeholderBg?: boolean;
+  onDone?: () => void;
 }) {
   return (
     <div
@@ -19,7 +22,7 @@ export function ProjectTask({
       } ${placeholderBg ? " z-30 bg-gray-100 dark:bg-gray-800" : ""}`}
     >
       <div className={`flex py-1  px-2${placeholderBg ? "opacity-0" : ""}`}>
-        <CheckCircleIcon className="mr-2 h-6 text-gray-400" strokeWidth={0.5} />
+        <CheckIcon onClick={onDone} />
         <div className="flex flex-grow justify-between">
           <div>
             <p className="pt-[3px]">{task.name}</p>
