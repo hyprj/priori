@@ -2,7 +2,7 @@ import { IProject, ISection, Optional, PartialExcept } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
-import { DBSection } from "src/types/dbTypes";
+import { DBPersonalTask, DBSection } from "src/types/dbTypes";
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -11,9 +11,7 @@ export const supabase = createClient<Database>(
 
 supabase
   .channel("any")
-  .on("postgres_changes", { event: "*", schema: "*" }, () => {
-    //TODO: handle events
-  })
+  .on("postgres_changes", { event: "*", schema: "*" }, () => {})
   .subscribe();
 
 export const login = async () => {
@@ -30,6 +28,42 @@ export const login = async () => {
 };
 
 export const signOut = () => supabase.auth.signOut();
+
+export async function getPersonalTasks(
+  userId: string
+): Promise<DBPersonalTask[]> {
+  const { data, error } = await supabase
+    .from("personal_task")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as DBPersonalTask[];
+}
+
+export async function createPersonalTask(
+  task: Omit<DBPersonalTask, "id" | "created_at">
+) {
+  const { data, error } = await supabase.from("personal_task").insert([task]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+}
+
+export async function deletePersonalTask(taskId: string) {
+  const { error } = await supabase
+    .from("personal_task")
+    .delete()
+    .match({ id: taskId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
 
 export async function getProjects(userId: string): Promise<IProject[]> {
   const { data, error } = await supabase

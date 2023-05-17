@@ -24,3 +24,12 @@ export interface DBTask {
   priority: Priority;
   created_at: string;
 }
+
+export interface DBPersonalTask {
+  user_id: string;
+  id: string;
+  name: string;
+  note: string | null;
+  priority: Priority;
+  created_at: string;
+}

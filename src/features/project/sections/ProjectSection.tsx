@@ -25,7 +25,10 @@ export function ProjectSection({
         projectId={projectId}
         sectionOrder={sectionOrder}
       />
-      <ProjectSectionHeader section={section} />
+      <ProjectSectionHeader
+        name={section.name}
+        tasksAmount={section.tasks.length}
+      />
       {section.tasks.map((task) => (
         <SortableItem key={task.id} id={task.id}>
           <ProjectTask task={task} placeholderBg={task.id === activeId} />
