@@ -1,6 +1,7 @@
 export const variants = {
-  primary: "bg-cl-bg/10 hover:bg-cl-bg/90 dark:text-white",
-  neutral: "hover:bg-neutral-300 dark:bg-white/10 hover:dark:bg-white/20",
+  primary:
+    "bg-neutral-200 hover:bg-neutral-300 dark:bg-slate-600 dark:hover:bg-slate-700 dark:text-white",
+  neutral: "hover:bg-neutral-300  hover:dark:bg-white/20",
   danger: "bg-red-500 hover:bg-red-700 text-white",
   success: "bg-green-500 hover:bg-green-700 text-white",
   warning: "bg-yellow-500 hover:bg-yellow-600 text-white",
