@@ -9,11 +9,6 @@ export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-supabase
-  .channel("any")
-  .on("postgres_changes", { event: "*", schema: "*" }, () => {})
-  .subscribe();
-
 export const login = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
@@ -59,6 +54,14 @@ export async function deletePersonalTask(taskId: string) {
     .from("personal_task")
     .delete()
     .match({ id: taskId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function deleteTask(taskId: string) {
+  const { error } = await supabase.from("tasks").delete().match({ id: taskId });
 
   if (error) {
     throw new Error(error.message);

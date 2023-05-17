@@ -17,7 +17,6 @@ async function handleAddSection(sections: {
       updateSection({ order: updated.order, id: updated.id })
     ),
   ]);
-  queryClient.refetchQueries();
 }
 
 export function AddSection({
@@ -39,7 +38,7 @@ export function AddSection({
       order: sectionOrder,
     };
     await mutateAsync({ new: newSection, updated: updatedSections });
-    queryClient.refetchQueries();
+    queryClient.refetchQueries(["project", projectId]);
     setIsOpen(false);
   };
   return (

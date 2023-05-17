@@ -40,7 +40,8 @@ export function EditProjectForm({
     }
     try {
       await updateProject({ id: project.id, name: data.projectName });
-      queryClient.refetchQueries();
+      queryClient.refetchQueries(["project"]);
+      // queryClient.refetchQueries("projects");
       onClose();
     } catch (err) {
       console.error(err);

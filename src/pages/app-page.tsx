@@ -12,9 +12,13 @@ export function AppPage() {
   const user = useUser();
 
   if (!user) return null;
-  const { data } = useQuery("personalTasks", () => getPersonalTasks(user.id), {
-    suspense: true,
-  });
+  const { data, refetch } = useQuery(
+    "personalTasks",
+    () => getPersonalTasks(user.id),
+    {
+      suspense: true,
+    }
+  );
 
   if (!data) return null;
 
@@ -38,11 +42,11 @@ export function AppPage() {
           { weekday: "long", month: "long", day: "numeric" }
         )}`}</h3>
         <PersonalSection name="Today" tasksAmount={todayTasks.length}>
-          <PersonalSectionTasks tasks={todayTasks} />
+          <PersonalSectionTasks refetch={refetch} tasks={todayTasks} />
           <PersonalTasksFooter userId={user.id} />
         </PersonalSection>
         <PersonalSection name="Overdue" tasksAmount={overdueTasks.length}>
-          <PersonalSectionTasks tasks={overdueTasks} />
+          <PersonalSectionTasks refetch={refetch} tasks={overdueTasks} />
         </PersonalSection>
       </Container>
     </Page>

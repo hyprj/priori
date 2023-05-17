@@ -13,9 +13,13 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 export function Sidebar() {
   const user = useUser()!;
   const { isOpen, toggle, close, open } = useSidebarContext();
-  const { data: projects } = useQuery("projects", () => getProjects(user?.id), {
-    suspense: true,
-  });
+  const { data: projects } = useQuery(
+    ["project"],
+    () => getProjects(user?.id),
+    {
+      suspense: true,
+    }
+  );
   const widthRef = useRef(window.innerWidth);
 
   useEffect(() => {
