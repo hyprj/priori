@@ -1,19 +1,13 @@
-import { IProject, ISection } from "src/types/types";
+import { IProject, ISection, Optional, PartialExcept } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
+import { DBPersonalTask, DBSection } from "src/types/dbTypes";
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
-
-supabase
-  .channel("any")
-  .on("postgres_changes", { event: "*", schema: "*" }, () => {
-    //TODO: handle events
-  })
-  .subscribe();
 
 export const login = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -29,6 +23,50 @@ export const login = async () => {
 };
 
 export const signOut = () => supabase.auth.signOut();
+
+export async function getPersonalTasks(
+  userId: string
+): Promise<DBPersonalTask[]> {
+  const { data, error } = await supabase
+    .from("personal_task")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as DBPersonalTask[];
+}
+
+export async function createPersonalTask(
+  task: Omit<DBPersonalTask, "id" | "created_at">
+) {
+  const { data, error } = await supabase.from("personal_task").insert([task]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+}
+
+export async function deletePersonalTask(taskId: string) {
+  const { error } = await supabase
+    .from("personal_task")
+    .delete()
+    .match({ id: taskId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function deleteTask(taskId: string) {
+  const { error } = await supabase.from("tasks").delete().match({ id: taskId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
 
 export async function getProjects(userId: string): Promise<IProject[]> {
   const { data, error } = await supabase
@@ -67,6 +105,29 @@ export async function createProject(userId: string, projectName: string) {
   }
 }
 
+export async function updateProject(
+  projectFields: Partial<IProject> & { id: string }
+) {
+  const { error } = await supabase
+    .from("projects")
+    .update(projectFields)
+    .match({ id: projectFields.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function deleteProject(projectId: string) {
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .match({ id: projectId });
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function createTask(task: Omit<ITask, "id">) {
   const { data, error } = await supabase.from("tasks").insert([task]);
 
@@ -95,4 +156,17 @@ export async function createSection(section: Omit<ISection, "id" | "tasks">) {
     throw new Error(error.message);
   }
   return data;
+}
+
+export async function updateSection(
+  sectionFields: PartialExcept<DBSection, "id">
+) {
+  const { error } = await supabase
+    .from("sections")
+    .update(sectionFields)
+    .match({ id: sectionFields.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }

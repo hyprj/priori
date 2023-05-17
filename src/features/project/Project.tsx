@@ -8,7 +8,7 @@ import {
   orderProject,
   reOrderTasks,
   sortByOrder,
-} from "./utils";
+} from "./utils/utils";
 import {
   DndContext,
   DragEndEvent,
@@ -143,17 +143,19 @@ export function Project({ project }: { project: IProject }) {
             >
               <ProjectSection
                 key={section.id}
-                freeOrder={project.sections.length + 1}
+                sectionOrder={section.order}
                 projectId={project.id}
                 section={section}
+                sections={items.sections}
                 activeId={activeId}
               />
             </SortableContext>
           </div>
         ))}
         <AddSection
+          sections={items.sections}
           projectId={project.id}
-          order={project.sections.length + 1}
+          sectionOrder={project.sections.length}
         />
       </div>
       <DragTaskOverlay

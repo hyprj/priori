@@ -9,12 +9,8 @@ import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
   const user = useUser();
-  const { data: projects } = useQuery<IProject[]>(
-    "projects",
-    () => getProjects(user?.id!),
-    {
-      suspense: true,
-    }
+  const { data: projects } = useQuery<IProject[]>("projects", () =>
+    getProjects(user?.id!)
   );
 
   if (!projects) {
@@ -27,6 +23,11 @@ export function ProjectsPage() {
         <div className="my-16">
           <h3 className="text-3xl font-semibold">Projects</h3>
           <section className="mt-8">
+            {projects.length === 0 && (
+              <p className="mb-6">
+                Seems like you don't have any projects yet.
+              </p>
+            )}
             {projects.map((project) => (
               <Link key={project.id} to={`/app/projects/${project.id}`}>
                 <div className="my-4 rounded-lg p-2 hover:bg-neutral-100 hover:dark:bg-white/10">

@@ -7,25 +7,19 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 export function ProjectPage() {
+  const { id: projectId } = useParams<{ id: string }>();
   const user = useUser();
 
-  if (!user?.id) {
+  if (!user?.id || !projectId) {
     return null;
   }
-  const { id: projectId } = useParams<{ id: string }>();
 
-  if (!projectId) return null;
-
-  const { data: project } = useQuery(
-    ["project", projectId],
-    () => getProject(user.id, projectId),
-    {
-      suspense: true,
-    }
+  const { data: project } = useQuery(["project", projectId], () =>
+    getProject(user.id, projectId)
   );
 
   if (!project) {
-    return <p>error</p>;
+    return null;
   }
 
   return (

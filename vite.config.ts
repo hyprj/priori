@@ -19,4 +19,9 @@ export default defineConfig({
   },
   // base: "/priori/",
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
+  },
 });

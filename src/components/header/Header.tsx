@@ -56,7 +56,7 @@ export function Header() {
             Priori
           </h1>
           <Menu as="div" className="relative">
-            <div className="rounded-md p-1 hover:bg-gray-200">
+            <div className="rounded-md p-1 hover:bg-gray-200 dark:hover:bg-slate-600">
               <Menu.Button>
                 {user ? (
                   <img
@@ -90,10 +90,9 @@ export function Header() {
                   </>
                 </Menu.Item>
                 <Menu.Item>
-                  <>
-                    {/* <ToggleThemeButton /> */}
+                  <div className="mt-4 w-full">
                     <ThemeButton />
-                  </>
+                  </div>
                 </Menu.Item>
               </Menu.Items>
             </Transition>
