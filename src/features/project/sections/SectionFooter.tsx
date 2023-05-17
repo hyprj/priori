@@ -44,7 +44,7 @@ export function SectionFooter({
   return (
     <footer>
       {!isActive && (
-        <Button variant="primary" size="xxs">
+        <Button variant="neutral" size="xxs">
           <PlusIcon
             className="h-6"
             strokeWidth={0.5}

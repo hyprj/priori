@@ -7,6 +7,7 @@ export function ThemeButton() {
   const { currentTheme, setTheme } = useTheme();
   return (
     <Button
+      className="w-full"
       onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
     >
       <span className="flex justify-between">

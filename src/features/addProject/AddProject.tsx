@@ -10,7 +10,9 @@ export function AddProject({
   const [isActive, setIsActive] = useState(false);
   return (
     <>
-      <Button onClick={() => setIsActive(true)}>{buttonContent}</Button>
+      <Button variant="primary" onClick={() => setIsActive(true)}>
+        {buttonContent}
+      </Button>
       <AddProjectDialog isActive={isActive} setIsActive={setIsActive} />
     </>
   );

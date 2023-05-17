@@ -49,7 +49,7 @@ export function Sidebar() {
       <aside
         className={`fixed top-0 z-50 bg-neutral-50 pt-16 transition-transform dark:bg-slate-600 lg:top-auto ${
           isOpen ? "" : "-translate-x-56"
-        } 500ms  h-full w-56 flex-shrink-0 px-4 pt-4 font-abhaya shadow-sm `}
+        } 500ms  h-full w-56 flex-shrink-0 px-4 pt-4 shadow-sm `}
       >
         <XMarkIcon onClick={toggle} className="ml-auto h-8 lg:hidden" />
         <SidebarNav>
