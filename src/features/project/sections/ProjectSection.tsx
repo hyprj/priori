@@ -4,6 +4,8 @@ import { ProjectTask } from "../task/ProjectTask";
 import { AddSection } from "./AddSection";
 import { ProjectSectionHeader } from "./ProjectSectionHeader";
 import { SectionFooter } from "./SectionFooter";
+import { queryClient } from "../../../main";
+import { deleteTask } from "@services/db";
 
 export function ProjectSection({
   projectId,
@@ -18,6 +20,11 @@ export function ProjectSection({
   sectionOrder: number;
   activeId: string | null;
 }) {
+  const refetch = async (taskId: string) => {
+    await deleteTask(taskId);
+    queryClient.refetchQueries(["project", projectId]);
+  };
+
   return (
     <section className="m-4" key={section.id}>
       <AddSection
@@ -31,7 +38,11 @@ export function ProjectSection({
       />
       {section.tasks.map((task) => (
         <SortableItem key={task.id} id={task.id}>
-          <ProjectTask task={task} placeholderBg={task.id === activeId} />
+          <ProjectTask
+            task={task}
+            placeholderBg={task.id === activeId}
+            onDone={() => refetch(task.id)}
+          />
         </SortableItem>
       ))}
       {section.tasks.length === 0 && (
@@ -40,6 +51,7 @@ export function ProjectSection({
         </SortableItem>
       )}
       <SectionFooter
+        projectId={projectId}
         sectionId={section.id}
         newTaskOrder={section.tasks.length}
       />

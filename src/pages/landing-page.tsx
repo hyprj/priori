@@ -2,14 +2,17 @@ import { Button } from "@components/button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { Page } from "@layouts/Page/Page";
 import { useUser } from "@features/auth/useUser";
+import { useEffect } from "react";
 
 export function LandingPage() {
   const user = useUser();
   const navigate = useNavigate();
 
-  if (user) {
-    navigate("/app");
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/app");
+    }
+  }, []);
 
   return (
     <Page noSidebar>

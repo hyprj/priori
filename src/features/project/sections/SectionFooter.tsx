@@ -17,9 +17,11 @@ export interface AddTaskInputs {
 export function SectionFooter({
   sectionId,
   newTaskOrder,
+  projectId,
 }: {
   sectionId: string;
   newTaskOrder: number;
+  projectId: string;
 }) {
   const [isActive, setIsActive] = useState(false);
   const { mutateAsync } = useMutation((task: Omit<ITask, "id">) =>
@@ -35,7 +37,7 @@ export function SectionFooter({
       order: newTaskOrder,
     };
     await mutateAsync(task);
-    queryClient.refetchQueries();
+    queryClient.refetchQueries(["project", projectId]);
     setIsActive(false);
   };
 

@@ -9,12 +9,8 @@ import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
   const user = useUser();
-  const { data: projects } = useQuery<IProject[]>(
-    "projects",
-    () => getProjects(user?.id!),
-    {
-      suspense: true,
-    }
+  const { data: projects } = useQuery<IProject[]>("projects", () =>
+    getProjects(user?.id!)
   );
 
   if (!projects) {
