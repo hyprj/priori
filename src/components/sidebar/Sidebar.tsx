@@ -15,7 +15,7 @@ export function Sidebar() {
   const { isOpen, toggle, close, open } = useSidebarContext();
   const { data: projects } = useQuery(
     ["project"],
-    () => getProjects(user?.id),
+    () => getProjects(user!.id),
     {
       suspense: true,
     }

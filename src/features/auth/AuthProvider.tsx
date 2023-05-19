@@ -27,7 +27,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (event === "SIGNED_IN") {
         setUser(session?.user ?? null);
         setStatus("idle");
-        console.log(session?.user);
       } else if (event === "SIGNED_OUT") {
         setUser(null);
         setStatus("idle");

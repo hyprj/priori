@@ -10,7 +10,7 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { queryClient } from "../../main";
-import { login, signOut } from "@services/db";
+import { signOut } from "@services/db";
 import { ThemeButton } from "@components/themeButton/ThemeButton";
 import { useAuth } from "@features/auth/AuthProvider";
 
@@ -52,7 +52,7 @@ export function Header() {
                 {user ? (
                   <img
                     className="inline-block h-6 rounded-full"
-                    src={user?.avatar_url}
+                    src={(user as any).avatar_url}
                   />
                 ) : (
                   <UserCircleIcon className="inline-block h-6 w-6" />
