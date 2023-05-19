@@ -13,8 +13,12 @@ export const signInWithGithub = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: "https://hyprj-priori.netlify.app/",
+      // skipBrowserRedirect: false,
+      redirectTo: "https://hyprj-priori.netlify.app/app/",
     },
+    // options: {
+    //   redirectTo: "https://hyprj-priori.netlify.app/",
+    // },
   });
   if (error) {
     throw new Error(error.message);

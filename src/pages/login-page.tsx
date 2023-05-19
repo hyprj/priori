@@ -18,10 +18,10 @@ export function LoginPage() {
     try {
       setError(null);
       const user = await signInWithEmail(email, password);
-      if (user.user) {
-        queryClient.setQueryData("user", user.user);
-        navigate("/app");
-      }
+      // if (user.user) {
+      // queryClient.setQueryData("user", user.user);
+      // navigate("/app");
+      // }
     } catch (err: any) {
       setError(err.message);
     }
