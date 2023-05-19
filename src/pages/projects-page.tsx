@@ -1,6 +1,6 @@
 import { Container } from "@components/container/Container";
 import { AddProject } from "@features/addProject/AddProject";
-import { useUser } from "@features/auth/useUser";
+import { useAuth } from "@features/auth/AuthProvider";
 import { Page } from "@layouts/Page/Page";
 import { getProjects } from "@services/db";
 import { useQuery } from "react-query";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
-  const user = useUser();
+  const { user } = useAuth();
   const { data: projects } = useQuery<IProject[]>("projects", () =>
     getProjects(user?.id!)
   );

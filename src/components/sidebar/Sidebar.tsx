@@ -6,12 +6,12 @@ import { useEffect, useRef } from "react";
 import { SideBarGroup } from "./SidebarGroup";
 import { useQuery } from "react-query";
 import { getProjects } from "@services/db";
-import { useUser } from "@features/auth/useUser";
 import { AddProject } from "@features/addProject/AddProject";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "@features/auth/AuthProvider";
 
 export function Sidebar() {
-  const user = useUser()!;
+  const { user } = useAuth()!;
   const { isOpen, toggle, close, open } = useSidebarContext();
   const { data: projects } = useQuery(
     ["project"],

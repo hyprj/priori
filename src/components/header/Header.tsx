@@ -1,6 +1,5 @@
 import { Button } from "@components/button/Button";
 import { useSidebarContext } from "@components/sidebar/SidebarProvider";
-import { useUser } from "@features/auth/useUser";
 import { Menu, Transition } from "@headlessui/react";
 import {
   UserCircleIcon,
@@ -12,13 +11,13 @@ import { Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { queryClient } from "../../main";
 import { login, signOut } from "@services/db";
-import { ToggleThemeButton } from "@features/theme/ToggleThemeButton";
 import { ThemeButton } from "@components/themeButton/ThemeButton";
+import { useAuth } from "@features/auth/AuthProvider";
 
 export function Header() {
   const { toggle } = useSidebarContext();
   const navigate = useNavigate();
-  const user = useUser();
+  const { user } = useAuth();
 
   const { pathname } = useLocation();
 
@@ -26,14 +25,6 @@ export function Header() {
     signOut();
     queryClient.setQueryData("user", null);
     navigate("/");
-  };
-
-  const onSignIn = async () => {
-    try {
-      await login();
-    } catch (error) {
-      console.warn("Could not sign in");
-    }
   };
 
   return (
@@ -80,15 +71,30 @@ export function Header() {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 flex min-w-[8rem] flex-col gap-1 rounded-lg bg-white p-1 shadow  dark:bg-slate-800">
-                <Menu.Item>
-                  <>
-                    {user ? (
+                {user ? (
+                  <Menu.Item>
+                    <>
                       <Button onClick={onSignOut}>Sign Out</Button>
-                    ) : (
-                      <Button onClick={onSignIn}>Sign In</Button>
-                    )}
+                    </>
+                  </Menu.Item>
+                ) : (
+                  <>
+                    <Menu.Item>
+                      <>
+                        <Button onClick={() => navigate("/login")}>
+                          Log In
+                        </Button>
+                      </>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <>
+                        <Button onClick={() => navigate("/register")}>
+                          Sign Up
+                        </Button>
+                      </>
+                    </Menu.Item>
                   </>
-                </Menu.Item>
+                )}
                 <Menu.Item>
                   <div className="mt-4 w-full">
                     <ThemeButton />

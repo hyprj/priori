@@ -1,5 +1,5 @@
 import { Container } from "@components/container/Container";
-import { useUser } from "@features/auth/useUser";
+import { useAuth } from "@features/auth/AuthProvider";
 import { Project } from "@features/project/Project";
 import { Page } from "@layouts/Page/Page";
 import { getProject } from "@services/db";
@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 export function ProjectPage() {
   const { id: projectId } = useParams<{ id: string }>();
-  const user = useUser();
+  const { user } = useAuth();
 
   if (!user?.id || !projectId) {
     return null;

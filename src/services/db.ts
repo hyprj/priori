@@ -1,4 +1,4 @@
-import { IProject, ISection, Optional, PartialExcept } from "src/types/types";
+import { IProject, ISection, PartialExcept } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
@@ -9,12 +9,35 @@ export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-export const login = async () => {
+export const signInWithGithub = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
       redirectTo: "https://hyprj-priori.netlify.app/",
     },
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+export const signUpWithEmail = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  console.log(email, password, error);
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+export const signInWithEmail = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
   });
   if (error) {
     throw new Error(error.message);

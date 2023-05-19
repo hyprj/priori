@@ -1,10 +1,10 @@
 import { Button } from "@components/button/Button";
 import { useForm } from "react-hook-form";
 import { queryClient } from "../../main";
-import { useUser } from "@features/auth/useUser";
 import { TextInput } from "@components/textInput/TextInput";
 import { IProject } from "src/types/types";
 import { updateProject } from "@services/db";
+import { useAuth } from "@features/auth/AuthProvider";
 
 interface Inputs {
   projectName: string;
@@ -21,7 +21,7 @@ export function EditProjectForm({
     defaultValues: { projectName: project.name },
   });
 
-  const user = useUser();
+  const { user } = useAuth();
   const userId = user?.id;
 
   const namesInUse =
