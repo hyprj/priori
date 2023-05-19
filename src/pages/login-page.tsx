@@ -1,13 +1,10 @@
 import { AuthForm } from "@features/auth/AuthForm";
 import { Page } from "@layouts/Page/Page";
 import { signInWithEmail } from "@services/db";
-import { queryClient } from "../main";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export function LoginPage() {
   const [error, setError] = useState<null | string>(null);
-  const navigate = useNavigate();
   async function onSubmit({
     email,
     password,
@@ -17,11 +14,7 @@ export function LoginPage() {
   }) {
     try {
       setError(null);
-      const user = await signInWithEmail(email, password);
-      // if (user.user) {
-      // queryClient.setQueryData("user", user.user);
-      // navigate("/app");
-      // }
+      await signInWithEmail(email, password);
     } catch (err: any) {
       setError(err.message);
     }
