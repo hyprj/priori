@@ -1,5 +1,5 @@
 import { Container } from "@components/container/Container";
-import { useUser } from "@features/auth/useUser";
+import { useAuth } from "@features/auth/AuthProvider";
 import { PersonalSection } from "@features/personalTasks/PersonalSection";
 import { PersonalSectionTasks } from "@features/personalTasks/PersonalSectionTasks";
 import { PersonalTasksFooter } from "@features/personalTasks/PersonalTasksFooter";
@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import { DBPersonalTask } from "src/types/dbTypes";
 
 export function AppPage() {
-  const user = useUser();
+  const { user } = useAuth();
 
   if (!user) return null;
   const { data, refetch } = useQuery(

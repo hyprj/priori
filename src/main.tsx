@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import { ThemeProvider } from "@features/theme/ThemeProvider";
+import { AuthProvider } from "@features/auth/AuthProvider";
 import App from "./App";
 
 import "./index.css";
@@ -15,11 +16,13 @@ export const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
