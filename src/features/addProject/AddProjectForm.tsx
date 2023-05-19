@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { queryClient } from "../../main";
 import { IProject } from "../../types/types";
 import { createProject } from "@services/db";
-import { useUser } from "@features/auth/useUser";
 import { TextInput } from "@components/textInput/TextInput";
+import { useAuth } from "@features/auth/AuthProvider";
 
 interface Inputs {
   projectName: string;
@@ -13,7 +13,7 @@ interface Inputs {
 export function AddProjectForm({ onClose }: { onClose: () => void }) {
   const { register, handleSubmit, formState, setError } = useForm<Inputs>();
 
-  const user = useUser();
+  const { user } = useAuth();
   const userId = user?.id;
 
   const namesInUse =

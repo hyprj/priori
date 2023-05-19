@@ -1,13 +1,13 @@
 import { AuthForm } from "@features/auth/AuthForm";
 import { Page } from "@layouts/Page/Page";
-import { signInWithEmail } from "@services/db";
-import { queryClient } from "../main";
-import { useNavigate } from "react-router-dom";
+import { signUpWithEmail } from "@services/db";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export function LoginPage() {
+export function SignUpPage() {
   const [error, setError] = useState<null | string>(null);
   const navigate = useNavigate();
+
   async function onSubmit({
     email,
     password,
@@ -17,10 +17,10 @@ export function LoginPage() {
   }) {
     try {
       setError(null);
-      const user = await signInWithEmail(email, password);
-      if (user.user) {
-        queryClient.setQueryData("user", user.user);
-        navigate("/app");
+      const newUser = await signUpWithEmail(email, password);
+      if (newUser.user) {
+        console.log("done");
+        navigate("/login");
       }
     } catch (err: any) {
       setError(err.message);
@@ -30,14 +30,15 @@ export function LoginPage() {
   return (
     <Page>
       <div className="flex h-full  justify-center ">
-        <div className="relative mt-24 min-w-[20rem]">
+        <div className="mt-24 min-w-[20rem]">
           {error && (
             <p className=" absolute w-full text-center text-red-500">{error}</p>
           )}
           <div className="rounded-lg bg-white p-6 shadow-md dark:bg-slate-700">
-            <h3 className="mb-8 text-3xl font-bold">Log in</h3>
+            <h3 className="mb-8 text-3xl font-bold">Sign Up</h3>
+            {error && <p>{error}</p>}
             <div>
-              <AuthForm onSubmit={onSubmit} authType="LOGIN" />
+              <AuthForm onSubmit={onSubmit} authType="SIGNUP" />
             </div>
           </div>
         </div>

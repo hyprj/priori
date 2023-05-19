@@ -6,6 +6,8 @@ import { ProjectsPage } from "@pages/projects-page";
 import { Routes, Route } from "react-router-dom";
 import { Root } from "./pages/Root";
 import { LoginPage } from "@pages/login-page";
+import { SignUpPage } from "@pages/signup-page";
+import { ProtectedRoutes } from "@components/protectedRoutes/ProtectedRoutes";
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/app">
+        <Route path="/register" element={<SignUpPage />} />
+        <Route path="/app" element={<ProtectedRoutes />}>
           <Route index element={<AppPage />} />
           <Route path="projects">
             <Route index element={<ProjectsPage />} />
