@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
 import { PomodoroState } from ".";
+import { updatePomodoro } from "@services/db";
 
 const DEFAULT_TIMER_PROPS: TimerProps = {
   timer: null,
@@ -47,7 +48,8 @@ export const createTimerSlice: StateCreator<
 
   const changeMode = (mode: TimerMode) => {
     get().stop();
-
+    // console.log("wtf");
+    get().updatePomodoro({ mode: mode });
     set({ mode, timeleft: get().length[mode] as number });
   };
   const startTimerLoop = () => {
