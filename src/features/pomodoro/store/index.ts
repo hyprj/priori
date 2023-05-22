@@ -1,44 +1,14 @@
-import { createStore } from "zustand";
-import { TimerState, TimerProps, createTimerSlice } from "./timerSlice";
-import {
-  SettingsProps,
-  SettingsState,
-  createSettingsSlice,
-} from "./settingsSlice";
+import { StoreApi, UseBoundStore, create } from "zustand";
+import { TimerSlice, createTimerSlice } from "./timerSlice";
+import { SettingsSlice, createSettingsSlice } from "./settingsSlice";
 
-export interface PomodoroState extends TimerState, SettingsState {}
+export interface PomodoroState extends TimerSlice, SettingsSlice {}
 
-const DEFAULT_TIMER_PROPS: TimerProps = {
-  timer: null,
-  isRunning: false,
-  mode: "pomodoro",
-  timeleft: 1500,
-  isNew: true,
-};
-const DEFAULT_SETTINGS_PROPS: SettingsProps = {
-  autoStartBreak: false,
-  autoStartPomodoro: false,
-  length: {
-    pomodoro: 1500,
-    "long-break": 900,
-    "short-break": 300,
-  },
-};
-
-export const createPomodoroStore = (
-  initTimerProps?: Partial<TimerProps>,
-  initSettingsProps?: Partial<SettingsProps>
-) => {
-  return createStore<PomodoroState>()((set, get) => ({
-    ...createTimerSlice(set, get, {
-      ...DEFAULT_TIMER_PROPS,
-      ...initTimerProps,
-    }),
-    ...createSettingsSlice(set, get, {
-      ...DEFAULT_SETTINGS_PROPS,
-      ...initSettingsProps,
-    }),
+export const createPomodoroStore = () => {
+  return create<PomodoroState>()((set, get, api) => ({
+    ...createTimerSlice(set, get, api),
+    ...createSettingsSlice(set, get, api),
   }));
 };
 
-export type PomodoroStore = ReturnType<typeof createPomodoroStore>;
+export type PomodoroStore = UseBoundStore<StoreApi<PomodoroState>>;

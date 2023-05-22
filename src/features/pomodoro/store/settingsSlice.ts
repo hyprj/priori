@@ -1,5 +1,16 @@
+import { StateCreator } from "zustand";
 import { PomodoroState } from ".";
 import { TimerMode } from "./timerSlice";
+
+const DEFAULT_SETTINGS_PROPS: SettingsProps = {
+  autoStartBreak: false,
+  autoStartPomodoro: false,
+  length: {
+    pomodoro: 1500,
+    "long-break": 900,
+    "short-break": 300,
+  },
+};
 
 export interface SettingsProps {
   autoStartPomodoro: boolean;
@@ -11,22 +22,17 @@ export interface SettingsProps {
   };
 }
 
-export interface SettingsState extends SettingsProps {
+export interface SettingsSlice extends SettingsProps {
   changeLength: (mode: TimerMode, seconds: number) => void;
   updateSettings: (settings: SettingsProps) => void;
 }
-export const createSettingsSlice = (
-  set: (
-    partial:
-      | PomodoroState
-      | Partial<PomodoroState>
-      | ((state: PomodoroState) => PomodoroState | Partial<PomodoroState>),
-    replace?: boolean | undefined
-  ) => void,
-  get: () => PomodoroState,
-  data: SettingsProps
-) => ({
-  ...data,
+export const createSettingsSlice: StateCreator<
+  PomodoroState,
+  [],
+  [],
+  SettingsSlice
+> = (set, get) => ({
+  ...DEFAULT_SETTINGS_PROPS,
   changeLength: (mode: TimerMode, seconds: number) => {
     set({
       length: { ...get().length, [mode]: seconds },

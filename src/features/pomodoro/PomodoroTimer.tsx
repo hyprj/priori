@@ -14,13 +14,24 @@ export function PomodoroTimer() {
     (state) => state
   );
 
+  function handleChangeMode(mode: TimerMode) {
+    if (isRunning) {
+      const answer = confirm("Are you sure you want to change mode?");
+      if (answer) {
+        changeMode(mode);
+      }
+    } else {
+      changeMode(mode);
+    }
+  }
+
   return (
     <div
       className={`flex flex-col items-center rounded-lg text-white dark:text-slate-700 ${themes[mode]} py-8  shadow-lg`}
     >
       <div className="flex gap-2">
         <Button
-          onClick={() => changeMode("pomodoro")}
+          onClick={() => handleChangeMode("pomodoro")}
           className={`hover:bg-white/20 ${
             mode === "pomodoro" ? "bg-black/10" : ""
           }`}
@@ -28,7 +39,7 @@ export function PomodoroTimer() {
           Pomodoro
         </Button>
         <Button
-          onClick={() => changeMode("short-break")}
+          onClick={() => handleChangeMode("short-break")}
           className={`hover:bg-white/20 ${
             mode === "short-break" ? "bg-black/10" : ""
           }`}
@@ -36,7 +47,7 @@ export function PomodoroTimer() {
           Short Break
         </Button>
         <Button
-          onClick={() => changeMode("long-break")}
+          onClick={() => handleChangeMode("long-break")}
           className={`hover:bg-white/20 ${
             mode === "long-break" ? "bg-black/10" : ""
           }`}

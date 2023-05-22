@@ -1,13 +1,15 @@
+import { StateCreator } from "zustand";
 import { PomodoroState } from ".";
 
+const DEFAULT_TIMER_PROPS: TimerProps = {
+  timer: null,
+  isRunning: false,
+  mode: "pomodoro",
+  timeleft: 1500,
+  isNew: true,
+};
+
 export type TimerMode = "pomodoro" | "short-break" | "long-break";
-// export const SETTINGS_LENGHT_KEYS: {
-//   [key in TimerMode]: keyof PomodoroState;
-// } = {
-//   pomodoro: "pomodoroLength",
-//   "short-break": "shortBreakLength",
-//   "long-break": "longBreakLength",
-// };
 
 export interface TimerProps {
   timer: null | number;
@@ -17,41 +19,69 @@ export interface TimerProps {
   isNew: boolean;
 }
 
-export interface TimerState extends TimerProps {
+export interface TimerSlice extends TimerProps {
   start: () => void;
   stop: () => void;
   reset: () => void;
   toggle: () => void;
   changeMode: (mode: TimerMode) => void;
 }
-export const createTimerSlice = (
-  set: (
-    partial:
-      | PomodoroState
-      | Partial<PomodoroState>
-      | ((state: PomodoroState) => PomodoroState | Partial<PomodoroState>),
-    replace?: boolean | undefined
-  ) => void,
-  get: () => PomodoroState,
-  data: TimerProps
-) => ({
-  ...data,
-  start: () => {
+export const createTimerSlice: StateCreator<
+  PomodoroState,
+  [],
+  [],
+  TimerSlice
+> = (set, get) => {
+  const start = () => {
     clearInterval(get().timer!);
-    const timerId: any = setInterval(() => {
-      set((state) => ({ timeleft: state.timeleft - 1 }));
-    }, 1000);
-    set({ timer: timerId, isRunning: true, isNew: false });
-  },
-  stop: () => {
+    startTimerLoop();
+  };
+
+  const stop = () => {
     clearInterval(get().timer!);
     set({ timer: null, isRunning: false });
-  },
-  reset: () => {},
-  toggle: () => (get().isRunning ? get().stop() : get().start()),
-  changeMode: (mode: TimerMode) => {
+  };
+  const reset = () => {};
+
+  const toggle = () => (get().isRunning ? get().stop() : get().start());
+
+  const changeMode = (mode: TimerMode) => {
     get().stop();
 
     set({ mode, timeleft: get().length[mode] as number });
-  },
-});
+  };
+  const startTimerLoop = () => {
+    const timerId: any = setInterval(() => {
+      tick();
+      checkTimer();
+    }, 1);
+    set({ timer: timerId, isRunning: true, isNew: false });
+  };
+
+  const tick = () => {
+    set({ timeleft: get().timeleft - 1 });
+  };
+
+  const checkTimer = () => {
+    if (get().timeleft <= 0) {
+      stop();
+      changeMode(get().mode === "pomodoro" ? "short-break" : "pomodoro");
+
+      const mode = get().mode;
+      if (mode === "pomodoro" && get().autoStartPomodoro) {
+        start();
+      } else if (mode === "short-break" && get().autoStartBreak) {
+        start();
+      }
+    }
+  };
+
+  return {
+    ...DEFAULT_TIMER_PROPS,
+    start,
+    stop,
+    reset,
+    toggle,
+    changeMode,
+  };
+};
