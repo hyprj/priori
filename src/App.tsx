@@ -8,6 +8,7 @@ import { Root } from "./pages/Root";
 import { LoginPage } from "@pages/login-page";
 import { SignUpPage } from "@pages/signup-page";
 import { ProtectedRoutes } from "@components/protectedRoutes/ProtectedRoutes";
+import { PomodoroPage } from "@pages/pomodoro-page";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/app" element={<ProtectedRoutes />}>
           <Route index element={<AppPage />} />
+          <Route path="pomodoro" element={<PomodoroPage />} />
           <Route path="projects">
             <Route index element={<ProjectsPage />} />
             <Route path=":id" element={<ProjectPage />} />

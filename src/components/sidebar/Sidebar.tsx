@@ -59,6 +59,11 @@ export function Sidebar() {
             onClick={() => widthRef.current! < 800 && close()}
           />
           <SidebarItem
+            to="/app/pomodoro"
+            name="Pomodoro"
+            onClick={() => widthRef.current! < 800 && close()}
+          />
+          <SidebarItem
             to="/app/projects"
             name="Projects"
             onClick={() => widthRef.current! < 800 && close()}

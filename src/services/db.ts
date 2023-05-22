@@ -2,7 +2,7 @@ import { IProject, ISection, PartialExcept } from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
-import { DBPersonalTask, DBSection } from "src/types/dbTypes";
+import { DBPersonalTask, DBPomodoro, DBSection } from "src/types/dbTypes";
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -13,12 +13,8 @@ export const signInWithGithub = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      // skipBrowserRedirect: false,
       redirectTo: "https://hyprj-priori.netlify.app/app/",
     },
-    // options: {
-    //   redirectTo: "https://hyprj-priori.netlify.app/",
-    // },
   });
   if (error) {
     throw new Error(error.message);
@@ -192,6 +188,31 @@ export async function updateSection(
     .from("sections")
     .update(sectionFields)
     .match({ id: sectionFields.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getPomodoro(userId: string) {
+  const { data, error } = await supabase
+    .from("pomodoro")
+    .select("*")
+    .match({ user_id: userId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as DBPomodoro[];
+}
+
+export async function updatePomodoro(
+  pomodoroFields: PartialExcept<DBPomodoro, "id">
+) {
+  const { error } = await supabase
+    .from("pomodoro")
+    .update(pomodoroFields)
+    .match({ id: pomodoroFields.id });
 
   if (error) {
     throw new Error(error.message);
