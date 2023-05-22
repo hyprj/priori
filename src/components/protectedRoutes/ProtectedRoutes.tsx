@@ -1,4 +1,5 @@
 import { useAuth } from "@features/auth/AuthProvider";
+import { PomodoroProvider } from "@features/pomodoro/provider/PomodoroProvider";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -12,5 +13,9 @@ export function ProtectedRoutes() {
     }
   }, []);
 
-  return <Outlet />;
+  return (
+    <PomodoroProvider>
+      <Outlet />
+    </PomodoroProvider>
+  );
 }
