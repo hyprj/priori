@@ -25,7 +25,10 @@ export function PomodoroSettingsForm({
     useForm<PomodoroSettingsFormProps>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      data-testid="pomodoro-settings-modal"
+    >
       <div className="mt-8 flex gap-4">
         <TextInput
           type="number"

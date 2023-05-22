@@ -14,7 +14,7 @@ export interface DbSlice extends DbProps {
   updatePomodoro: (data: Partial<DBPomodoro>) => void;
 }
 export const createDbSlice: StateCreator<PomodoroState, [], [], DbSlice> = (
-  set,
+  _,
   get
 ) => ({
   ...DEFAULT_DB_PROPS,
