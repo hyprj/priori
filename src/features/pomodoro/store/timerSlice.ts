@@ -1,8 +1,7 @@
 import { StateCreator } from "zustand";
 import { PomodoroState } from ".";
-import { updatePomodoro } from "@services/db";
 
-const DEFAULT_TIMER_PROPS: TimerProps = {
+export const DEFAULT_TIMER_PROPS: TimerProps = {
   timer: null,
   isRunning: false,
   mode: "pomodoro",

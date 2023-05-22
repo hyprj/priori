@@ -1,7 +1,7 @@
 import { Button } from "@components/button/Button";
-import { usePomodoroContext } from "./hooks/usePomodoroContext";
-import { formatTime } from "./utils/utils";
-import { TimerMode } from "./store/timerSlice";
+import { usePomodoroContext } from "@features/pomodoro/hooks/usePomodoroContext";
+import { TimerMode } from "@features/pomodoro/store/timerSlice";
+import { formatTime } from "@features/pomodoro/utils/utils";
 
 const themes: { [key in TimerMode]: string } = {
   "long-break": "bg-blue-400/80",
@@ -27,6 +27,8 @@ export function PomodoroTimer() {
 
   return (
     <div
+      aria-label="pomodoro-timer"
+      data-mode={mode}
       className={`flex flex-col items-center rounded-lg text-white dark:text-slate-700 ${themes[mode]} py-8  shadow-lg`}
     >
       <div className="flex gap-2">

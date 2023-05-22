@@ -5,8 +5,8 @@ import { useState } from "react";
 import {
   PomodoroSettingsForm,
   PomodoroSettingsFormProps,
-} from "./PomodoroSettingsForm";
-import { usePomodoroContext } from "./hooks/usePomodoroContext";
+} from "../../PomodoroSettingsForm";
+import { usePomodoroContext } from "../../hooks/usePomodoroContext";
 
 export function PomodoroHeader() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -43,7 +43,11 @@ export function PomodoroHeader() {
       </Modal>
       <div className="mb-4 flex justify-between">
         <h3 className="font-abhaya text-3xl font-semibold">Pomodoro</h3>
-        <Button size="xxs" onClick={() => setIsSettingsOpen(true)}>
+        <Button
+          aria-label="pomodoro settings"
+          size="xxs"
+          onClick={() => setIsSettingsOpen(true)}
+        >
           <Cog8ToothIcon className="h-5" />
         </Button>
       </div>

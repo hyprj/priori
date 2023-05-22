@@ -1,6 +1,6 @@
 import { Container } from "@components/container/Container";
-import { PomodoroHeader } from "@features/pomodoro/PomodoroHeader";
-import { PomodoroTimer } from "@features/pomodoro/PomodoroTimer";
+import { PomodoroHeader } from "@features/pomodoro/components/PomodoroHeader/PomodoroHeader";
+import { PomodoroTimer } from "@features/pomodoro/components/PomodoroTimer/PomodoroTimer";
 import { Page } from "@layouts/Page/Page";
 
 export function PomodoroPage() {

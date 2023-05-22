@@ -13,7 +13,7 @@ export function formatTime(time: number): string {
 
 export function dbPomodoroToStoreProps(
   pomodoro: DBPomodoro
-): TimerProps & SettingsProps {
+): TimerProps & SettingsProps & DbProps {
   const res: TimerProps & SettingsProps & DbProps = {
     autoStartBreak: pomodoro.auto_start_break,
     autoStartPomodoro: pomodoro.auto_start_pomodoro,

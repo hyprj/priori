@@ -5,10 +5,10 @@ import {
   SettingsSlice,
   createSettingsSlice,
 } from "./settingsSlice";
-import { DbSlice, createDbSlice } from "./dbSlice";
+import { DbProps, DbSlice, createDbSlice } from "./dbSlice";
 
 export interface PomodoroState extends TimerSlice, SettingsSlice, DbSlice {
-  initiliazeStore: (data: TimerProps & SettingsProps) => void;
+  initiliazeStore: (data: TimerProps & SettingsProps & DbProps) => void;
 }
 
 export const createPomodoroStore = () => {
