@@ -11,6 +11,14 @@ export function orderProject(project: IProject): IProject {
   return proj;
 }
 
+export function sortSectionsWithTasks(sections: ISection[]) {
+  sections.sort((a, b) => a.order - b.order);
+  sections.forEach((section) => {
+    section.tasks.sort((a, b) => a.order - b.order);
+  });
+  return sections;
+}
+
 export function getActiveItem(
   activeId: UniqueIdentifier,
   sections: ISection[]
@@ -39,7 +47,11 @@ export function moveTaskToSection(
 ) {
   const taskIndex = fromSection.tasks.findIndex((t) => t.id === task.id);
   fromSection.tasks.splice(taskIndex, 1);
-  toSection.tasks.push({ ...task, section_id: toSection.id });
+  toSection.tasks.push({
+    ...task,
+    section_id: toSection.id,
+    order: toSection.tasks.length,
+  });
 }
 
 export function reOrderTasks(
