@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 import { ThemeProvider } from "@features/theme/ThemeProvider";
 import { AuthProvider } from "@features/auth/AuthProvider";
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <BrowserRouter>
           <QueryClientProvider client={queryClient}>
             <App />
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </BrowserRouter>
       </AuthProvider>

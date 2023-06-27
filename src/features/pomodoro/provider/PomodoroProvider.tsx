@@ -1,6 +1,6 @@
 import { createContext, useEffect, useRef } from "react";
 import { PomodoroStore, createPomodoroStore } from "../store/index";
-import { getPomodoro } from "@services/db";
+import { getPomodoro, getPomodoroTasks } from "@services/db";
 import { useAuth } from "@features/auth/AuthProvider";
 import { dbPomodoroToStoreProps } from "../utils/utils";
 
@@ -12,11 +12,19 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!user?.id) return;
-    getPomodoro(user.id).then((pomodoro) => {
+
+    const fetchPomodoro = async () => {
+      const [settings, tasks] = await Promise.all([
+        getPomodoro(user.id),
+        getPomodoroTasks(user.id),
+      ]);
+
       pomodoroStore
         .getState()
-        .initiliazeStore(dbPomodoroToStoreProps(pomodoro[0]));
-    });
+        .initiliazeStore(dbPomodoroToStoreProps(settings[0]));
+    };
+
+    fetchPomodoro();
   }, []);
 
   return (

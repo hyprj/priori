@@ -3,14 +3,23 @@ import { AddProject } from "@features/addProject/AddProject";
 import { useAuth } from "@features/auth/AuthProvider";
 import { Page } from "@layouts/Page/Page";
 import { getProjects } from "@services/db";
+import { queryClient } from "@src/main";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { IProject } from "src/types/types";
 
 export function ProjectsPage() {
   const { user } = useAuth();
-  const { data: projects } = useQuery<IProject[]>("projects", () =>
-    getProjects(user?.id!)
+  const { data: projects } = useQuery<IProject[]>(
+    "projects",
+    () => getProjects(user?.id!),
+    {
+      onSuccess: (data) => {
+        data.forEach((project) => {
+          queryClient.setQueryData(["project", project.id], project);
+        });
+      },
+    }
   );
 
   if (!projects) {

@@ -6,6 +6,7 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
+      "@src": path.resolve(__dirname, "./src/"),
       "@store": path.resolve(__dirname, "./src/store"),
       "@services": path.resolve(__dirname, "./src/services"),
       "@layouts": path.resolve(__dirname, "./src/layouts"),

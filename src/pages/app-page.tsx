@@ -6,38 +6,34 @@ import { PersonalTasksFooter } from "@features/personalTasks/PersonalTasksFooter
 import { Page } from "@layouts/Page/Page";
 import { getPersonalTasks } from "@services/db";
 import { useQuery } from "react-query";
-import { DBPersonalTask } from "src/types/dbTypes";
+import { queryClient } from "@src/main";
+import { categorizeTasksByDate } from "@src/utils/utils";
 
 export function AppPage() {
   const { user } = useAuth();
 
   if (!user) return null;
   const { data, refetch } = useQuery(
-    "personalTasks",
+    "personal-tasks",
     () => getPersonalTasks(user.id),
     {
       suspense: true,
+      onSuccess: (data) => {
+        data.forEach((task) => {
+          queryClient.setQueryData(["personal-tasks", task.id], task);
+        });
+      },
     }
   );
 
   if (!data) return null;
 
-  let todayTasks: DBPersonalTask[] = [];
-  let overdueTasks: DBPersonalTask[] = [];
-
-  const now = new Date();
-  data.forEach((task) => {
-    if (new Date(task.created_at).getDate() === now.getDate()) {
-      todayTasks.push(task);
-    } else {
-      overdueTasks.push(task);
-    }
-  });
+  const { todayTasks, overdueTasks } = categorizeTasksByDate(data);
 
   return (
     <Page>
       <Container>
-        <h3 className="mb-8 mt-16 font-abhaya text-3xl font-bold">{`${now.toLocaleString(
+        <h3 className="mb-8 mt-16 font-abhaya text-3xl font-bold">{`${new Date().toLocaleString(
           "en",
           { weekday: "long", month: "long", day: "numeric" }
         )}`}</h3>

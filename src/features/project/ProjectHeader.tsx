@@ -20,7 +20,7 @@ export function ProjectHeader({ project }: { project: IProject }) {
   };
 
   return (
-    <header className="flex justify-between">
+    <header className="sticky top-10 z-20 flex justify-between bg-white dark:bg-slate-700">
       <h3 className="text-3xl font-semibold">{project.name}</h3>
       <div className="flex gap-2">
         <EditProject project={project} />

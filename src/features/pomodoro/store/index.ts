@@ -1,14 +1,16 @@
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { TimerProps, TimerSlice, createTimerSlice } from "./timerSlice";
-import {
-  SettingsProps,
-  SettingsSlice,
-  createSettingsSlice,
-} from "./settingsSlice";
-import { DbProps, DbSlice, createDbSlice } from "./dbSlice";
+import { SettingsSlice, createSettingsSlice } from "./settingsSlice";
+import { DbSlice, createDbSlice } from "./dbSlice";
+import { TasksProps, TasksSlice, createTasksSlice } from "./tasksSlice";
 
-export interface PomodoroState extends TimerSlice, SettingsSlice, DbSlice {
-  initiliazeStore: (data: TimerProps & SettingsProps & DbProps) => void;
+export interface PomodoroState
+  extends TimerSlice,
+    SettingsSlice,
+    DbSlice,
+    TasksSlice {
+  initiliazeStore: (timer?: TimerProps, tasks?: TasksProps) => void;
+  isInitialized: boolean;
 }
 
 export const createPomodoroStore = () => {
@@ -16,9 +18,11 @@ export const createPomodoroStore = () => {
     ...createTimerSlice(set, get, api),
     ...createSettingsSlice(set, get, api),
     ...createDbSlice(set, get, api),
-    initiliazeStore: (data) => {
-      set(data);
+    ...createTasksSlice(set, get, api),
+    initiliazeStore: (timer, tasks) => {
+      set({ ...timer, ...tasks, isInitialized: true });
     },
+    isInitialized: false,
   }));
 };
 

@@ -1,8 +1,15 @@
-import { IProject, ISection, PartialExcept } from "src/types/types";
+import {
+  DBPomodoroTask,
+  IProject,
+  ISection,
+  PartialExcept,
+} from "src/types/types";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "src/types/supabase";
 import { ITask } from "src/types/types";
 import { DBPersonalTask, DBPomodoro, DBSection } from "src/types/dbTypes";
+
+export type HTMLStatusCode = number;
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -217,4 +224,45 @@ export async function updatePomodoro(
   if (error) {
     throw new Error(error.message);
   }
+}
+
+export async function getPomodoroTasks(userId: string) {
+  const { data, error } = await supabase
+    .from("pomodoro_task")
+    .select("*, tasks(name)")
+    .eq("user_id", userId)
+    .match({ user_id: userId });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as DBPomodoroTask[];
+}
+
+export async function createPomodoroTask(
+  pomodoroTask: Omit<DBPomodoroTask, "id" | "created_at" | "done">
+): Promise<HTMLStatusCode> {
+  const { error, status } = await supabase
+    .from("pomodoro_task")
+    .insert([pomodoroTask]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return status;
+}
+
+export async function updatePomodoroTask(
+  pomodoroTask: PartialExcept<DBPomodoroTask, "id">
+): Promise<HTMLStatusCode> {
+  const { error, status } = await supabase
+    .from("pomodoro_task")
+    .update(pomodoroTask)
+    .match({ id: pomodoroTask.id });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return status;
 }

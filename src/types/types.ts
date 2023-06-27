@@ -40,3 +40,15 @@ export interface IProject {
 }
 
 export type NewIProject = Omit<IProject, "id" | "tasks">;
+
+export interface DBPomodoroTask {
+  id: string;
+  task_id: string;
+  tasks: {
+    name: string;
+  };
+  done: number;
+  est: number;
+  user_id: string;
+  created_at: string;
+}

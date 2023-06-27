@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@src/*": ["src/*"],
       "@store/*": ["src/store/*"],
       "@services/*": ["src/services/*"],
       "@layouts/*": ["src/layouts/*"],

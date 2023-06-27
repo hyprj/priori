@@ -14,7 +14,7 @@ export function Sidebar() {
   const { user } = useAuth()!;
   const { isOpen, toggle, close, open } = useSidebarContext();
   const { data: projects } = useQuery(
-    ["project"],
+    ["projects"],
     () => getProjects(user!.id),
     {
       suspense: true,

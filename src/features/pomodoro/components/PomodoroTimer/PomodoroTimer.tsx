@@ -10,9 +10,8 @@ const themes: { [key in TimerMode]: string } = {
 };
 
 export function PomodoroTimer() {
-  const { mode, timeleft, isRunning, toggle, changeMode } = usePomodoroContext(
-    (state) => state
-  );
+  const { mode, timeleft, isRunning, toggle, changeMode, isInitialized } =
+    usePomodoroContext((state) => state);
 
   function handleChangeMode(mode: TimerMode) {
     if (isRunning) {
@@ -57,11 +56,18 @@ export function PomodoroTimer() {
           Long Break
         </Button>
       </div>
-      <div className="py-8 text-8xl font-semibold">{formatTime(timeleft)}</div>
+      <div
+        className={`py-8 text-8xl font-semibold transition-opacity ${
+          isInitialized ? "" : "opacity-0"
+        }`}
+      >
+        {formatTime(timeleft)}
+      </div>
       <button
-        className={`150ms rounded bg-white px-12 py-2 text-xl font-semibold uppercase text-black/80 transition-transform  dark:bg-slate-600 dark:text-white ${
+        className={`150ms cursor-pointer rounded bg-white px-12 py-2 text-xl font-semibold uppercase text-black/80 transition-transform disabled:cursor-not-allowed  dark:bg-slate-600 dark:text-white ${
           isRunning ? "" : "-translate-y-1 shadow-[0_5px_0_0_rgba(0,0,0,0.2)]"
         }`}
+        disabled={!isInitialized}
         onClick={() => toggle()}
       >
         {isRunning ? "Pause" : "Start"}
